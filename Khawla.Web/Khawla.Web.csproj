@@ -174,7 +174,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -251,6 +250,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Khawla.Data\Khawla.Data.csproj">
+      <Project>{F0FC8DA0-9C74-4C1B-B0DE-3D8A1E7F1B4A}</Project>
+      <Name>Khawla.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Khawla.Entities\Khawla.Entities.csproj">
+      <Project>{77C6773E-BD05-4DB4-96F1-D96FF232204A}</Project>
+      <Name>Khawla.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Khawla.Service\Khawla.Service.csproj">
+      <Project>{4D3954C4-5051-41A9-AEB6-030DDD67FC84}</Project>
+      <Name>Khawla.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

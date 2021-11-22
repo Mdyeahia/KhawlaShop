@@ -7,30 +7,31 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Khawla.Web.Models;
+using Khawla.Service;
 
 namespace Khawla.Web.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private KhawlaSignInManager _signInManager;
+        private KhawlaUserManager _userManager;
 
         public ManageController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(KhawlaUserManager userManager, KhawlaSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
+        public KhawlaSignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<KhawlaSignInManager>();
             }
             private set 
             { 
@@ -38,11 +39,11 @@ namespace Khawla.Web.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public KhawlaUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<KhawlaUserManager>();
             }
             private set
             {
