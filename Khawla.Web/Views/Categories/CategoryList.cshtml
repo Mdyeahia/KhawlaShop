@@ -1,0 +1,67 @@
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Category</h1>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form>
+                    <div class="input-group-append link-danger" id="button-addon4">
+                        <button id="CreateCategoryBtn" class="btn btn-info" type="button">Create New Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="picTemplate" style="display:none">
+    <img src="" class="image img-thumbnail mt-2" data-id="" />
+</div>
+
+<script>
+
+    $("#CreateCategoryBtn").click(function () {
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("Create","Categories")',
+        })
+            .done(function (response) {
+                $("#FormModel").modal("toggle");
+                $("#contentArea").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    })
+
+    function AttachNewImage(imgId, imgUrl)
+    {
+        var imgHtml = $("#picTemplate").clone();
+        imgHtml.find(".image").attr("data-id", imgId);
+        imgHtml.find("image").attr("src", "/FileStore/images/" + imgUrl)
+        $("#picArea").append(imgHtml.html());
+
+    }
+    function RemoveImageonClick() {
+        $("#picArea .image").click(function () {
+            $(this).remove();
+            $("#uploadCategoryPic").val("");
+            $("#picLength").show();
+            $("#picLength").append($("#picArea .image").length + " picture. ");
+        })
+    }
+    $("#cancelBtn").click(function () {
+        $("#contentArea").html("");
+        focusAction("tableContainer");
+    });
+</script>
