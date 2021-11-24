@@ -1,10 +1,12 @@
 ﻿using Khawla.Entities;
 using Khawla.Web.ViewModels;
+using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Khawla.Service;
 
 namespace Khawla.Web.Controllers
 {
@@ -26,14 +28,33 @@ namespace Khawla.Web.Controllers
             return PartialView();
         }
         [HttpPost]
-        public ActionResult Create(CategoryCreateViewModel model)
+        public JsonResult Create(CategoryCreateViewModel model)
         {
-            var newCategory = new Category();
+            JsonResult result = new JsonResult();
+            if (ModelState.IsValid)
+            {
+                var newCategory = new Category();
 
-            newCategory.Name = model.Name;
-            newCategory.Description = model.Description;
+                newCategory.Name = model.Name;
+                newCategory.Description = model.Description;
+                if (!string.IsNullOrEmpty(model.CategoryPictures))
+                {
+                    var pictureId = model.CategoryPictures
+                        .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(int.Parse).ToList();
+                    newCategory.CategoryPictures = new List<CategoryPicture>();
+                    newCategory.CategoryPictures.AddRange(pictureId.Select(s => new CategoryPicture()
+                    { CategoryId = newCategory.ID, PictureId = s }).ToList());
+                }
+                CategoriesService.Instance.SaveCategory(newCategory);
 
-            return RedirectToAction("CategoryList");
-        }
+                    result.Data = new { success = true };
+                }
+                else
+                {
+                    result.Data = new { success = false, message = "Invalid Inputs" };
+                }
+                return result;
+            }
     }
 }

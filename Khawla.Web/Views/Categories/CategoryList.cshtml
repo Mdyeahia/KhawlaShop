@@ -25,7 +25,7 @@
 </div>
 
 <div id="picTemplate" style="display:none">
-    <img src="" class="image img-thumbnail mt-2" data-id="" />
+    <img src="" class="image img-thumbnail mt-2"style="width:200px;height:200px" data-id="" />
 </div>
 
 <script>
@@ -47,9 +47,12 @@
     function AttachNewImage(imgId, imgUrl)
     {
         var imgHtml = $("#picTemplate").clone();
+
         imgHtml.find(".image").attr("data-id", imgId);
-        imgHtml.find("image").attr("src", "/FileStore/images/" + imgUrl)
+        imgHtml.find(".image").attr("src", "/FileStore/images/" + imgUrl);
         $("#picArea").append(imgHtml.html());
+        RemoveImageonClick();
+      
 
     }
     function RemoveImageonClick() {
@@ -58,6 +61,7 @@
             $("#uploadCategoryPic").val("");
             $("#picLength").show();
             $("#picLength").append($("#picArea .image").length + " picture. ");
+            $("#errorDiv").hide()
         })
     }
     $("#cancelBtn").click(function () {

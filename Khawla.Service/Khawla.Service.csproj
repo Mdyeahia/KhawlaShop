@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriesService.cs" />
     <Compile Include="KhawlaSignInManager.cs" />
     <Compile Include="KhawlaUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

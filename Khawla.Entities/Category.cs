@@ -9,7 +9,7 @@ namespace Khawla.Entities
     public class Category:BaseEntities
     {
         public virtual List<Product> Products { get; set; }
-        public List<CategoryPicture> CategoryPictures { get; set; }
+        public virtual List<CategoryPicture> CategoryPictures { get; set; }
 
     }
 }

@@ -13,9 +13,10 @@
             <input id="description" type="text" name="Description" class="form-control" />
         </div>
         <div class=" form-group">
-            <label for="CategoryPictures"class="btn btn-warning" style="cursor:pointer">Add Picture</label>
-            <input id="uploadCategoryPic" type="file" name="CategoryPictures" class="form-control"accept=".png,.jpg"/>
-        <input type="hidden"id="pictureId"name="CategoryPictures"/>
+            <label for="CategoryPictures" class="btn btn-warning" style="cursor:pointer">Add Picture</label>
+            <span id="picLength" class="badge badge-warning p-1"></span>
+            <input id="uploadCategoryPic" type="file" name="CategoryPictures" class="form-control" accept=".png,.jpg" />
+            <input type="hidden" id="pictureId" name="CategoryPictures" />
             <div id="picArea"></div>
         </div>
     </div>
@@ -66,46 +67,45 @@
     })
 
     $("#uploadCategoryPic").change(function () {
+        
         var picture = this.files;
         var picsLength = picture.length;
-        if (picsLength > 1) {
-            alert("Please! select only 1 pic for category! ")
-            picsLength = 1;
-        }
         var picsData = new FormData();
         for (var i = 0; i < picsLength; i++) {
             picsData.append("picture", picture[i]);
         }
-        $.ajax({
-            type: "post",
-            url: '@Url.Action("UploadPictures", "Shared")',
-            data: picsData,
-            dataType: "json",
-            processData: false,
-            contentType: false
-        })
-            .done(function (response) {
-                for (var i = 0; i < response.length; i++) {
-                    var picResponse = response[i];
-                    AttachNewImage(picResponse.id, picResponse.url);
-                }
-                var oldLength;
-                var newLength;
-                if ($("#picLength").text()) {
-                    oldLength = $("#picLength").text()[0];
-                    newLength = parseFloat(oldLength) + parseFloat(picsLength);
-                    $("picLength").empty();
-                }
-                else {
-                    newLength = picsLength;
-                }
-                $("#picLength").empty();
-                $("#picLength").append(newLength + " pictures. ");
-                $("#piclength").show();
+        var allpic = $("#picArea > img").length;
+       
+        if (allpic<=0) {
+            
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("UploadPictures", "Shared")',
+                data: picsData,
+                dataType: "json",
+                processData: false,
+                contentType: false
             })
+                .done(function (response) {
+                    for (var i = 0; i < response.length; i++) {
+                        var picResponse = response[i];
+                        AttachNewImage(picResponse.id, picResponse.url);
+                    }
+
+                    var count = $("#picArea > img").length;
+                    $("#picLength").empty();
+                    $("#picLength").append(count + " pictures. ");
+                    $("#piclength").show();
+
+                })
                 .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FAIL");
-            });
+                    alert("FAIL");
+                });
+        }
+        else {
+            $("#errorDiv").html(" 1 Picture for category!");
+            $("#errorDiv").show();
+        }
     });
 
     $("#CategorySaveBtn").click(function () {

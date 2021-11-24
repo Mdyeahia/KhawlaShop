@@ -10,6 +10,8 @@ namespace Khawla.Web.ViewModels
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public string CategoryPictures { get; set; }
+        public List<CategoryPicture> CategoryPictureList { get; set; }
     }
     public class CategoryListingViewModel
     {
