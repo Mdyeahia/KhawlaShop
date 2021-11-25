@@ -17,10 +17,21 @@ namespace Khawla.Web.Controllers
         {
             return View();
         }
-        public PartialViewResult CategoryList()
+        public PartialViewResult CategoryList(string search,int? pageNo)
         {
+            var pageSize = 3;
+            pageNo = pageNo ?? 1;
 
-            return PartialView();
+            CategoryListingViewModel model = new CategoryListingViewModel();
+
+            model.SearchTerm = search;
+            model.Allcategories = CategoriesService.Instance.FilterCategories(search,pageNo.Value,pageSize);
+
+            var TotalCategory = CategoriesService.Instance.TotalCategoryCount();
+
+            model.Pager = new Pager(TotalCategory, pageNo, pageSize);
+
+            return PartialView(model);
         }
         public ActionResult Create()
         {
@@ -56,5 +67,35 @@ namespace Khawla.Web.Controllers
                 }
                 return result;
             }
+
+        public ActionResult Edit(int Id)
+        {
+            EditCategoryViewModel model = new EditCategoryViewModel();
+            model.category = CategoriesService.Instance.categoryById(Id);
+
+            return PartialView(model);
+        }
+        [HttpPost]
+        public ActionResult Edit(EditCategoryViewModel model)
+        {
+            var category = CategoriesService.Instance.categoryById(model.Id);
+
+            category.ID = model.Id;
+            category.Name = model.Name;
+            category.Description = model.Description;
+
+            if (!string.IsNullOrEmpty(model.CategoryPictures))
+            {
+                var pictureId = model.CategoryPictures
+                      .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                      .Select(int.Parse).ToList();
+                category.CategoryPictures = new List<CategoryPicture>();
+                category.CategoryPictures.AddRange(pictureId.Select(s => new CategoryPicture()
+                { CategoryId = category.ID, PictureId = s }).ToList());
+            }
+            CategoriesService.Instance.UpdateCategory(category);
+
+            return RedirectToAction("CategoryList");
+        }
     }
 }

@@ -1,0 +1,121 @@
+﻿@model Khawla.Web.ViewModels.EditCategoryViewModel
+<div class="modal-header">
+    <h5 class="modal-title">Edit Category</h5>
+</div>
+<form id="UpdateTable" style="overflow: auto">
+    <div class="modal-body">
+        <input type="hidden" name="ID" value="@Model.category.ID" />
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" name="Name" value="@Model.category.Name" />
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input class="form-control" name="Description" value="@Model.category.Description" />
+        </div>
+        <div class="form-group">
+            <label for="uploadCategoryPic" class="btn btn-warning" style="cursor:pointer">
+                Update Pictures
+                @if (Model.category.CategoryPictures != null && Model.category.CategoryPictures.Count() > 0)
+                {
+                    <span id="existPicLength" class="badge badge-warning p-1">@Model.category.CategoryPictures.Count() Pictures.</span>
+                }
+                <span id="picLength" class="badge badge-warning p-1" style="display:none"></span>
+            </label>
+            <input id="uploadCategoryPic" class="form-control" name="CategoryPictures" type="file" style="display:none" />
+            <input type="hidden" id="pictureId" name="CategoryPictures" />
+            <div id="picArea">
+                @if (Model.category.CategoryPictures != null && Model.category.CategoryPictures.Count > 0)
+                {
+                    foreach (var picture in Model.category.CategoryPictures)
+                    {
+                        <img src="~/FileStore/images/@picture.Picture.Url"style="width:200px;height:200px" class="image img-thumbnail mt-2" data-id="@picture.PictureId" />
+                    }
+                }
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" id="UpdateBtn" class="btn btn-success">Update</button>
+            <button type="button" id="cancelBtn" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</form>
+<script>
+        RemoveImageonClick()
+        
+     $("#UpdateBtn").click(function () {
+
+        var picIds = [];
+
+        $("#picArea .image").each(function () {
+            var picId = $(this).attr("data-id");
+
+            picIds.push(picId);
+        });
+
+        $("#pictureId").val(picIds);
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("Edit", "Categories")',
+            data: $("#UpdateTable").serialize()
+
+        })
+            .done(function (response) {
+
+                $("#tableContainer").html(response);
+                $('#FormModel').modal('hide');
+                //$("#contentArea").html('');
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+     });
+    $("#uploadCategoryPic").change(function () {
+
+        var picture = this.files;
+        var picsLength = picture.length;
+        var picsData = new FormData();
+        for (var i = 0; i < picsLength; i++) {
+            picsData.append("picture", picture[i]);
+        }
+        var allpic = $("#picArea > img").length;
+
+        if (allpic<=0) {
+
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("UploadPictures", "Shared")',
+                data: picsData,
+                dataType: "json",
+                processData: false,
+                contentType: false
+            })
+                .done(function (response) {
+                    for (var i = 0; i < response.length; i++) {
+                        var picResponse = response[i];
+                        AttachNewImage(picResponse.id, picResponse.url);
+                    }
+
+                    var count = $("#picArea > img").length;
+                    $("#picLength").empty();
+                    $("#picLength").append(count + " pictures. ");
+                    $("#piclength").show();
+
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("FAIL");
+                });
+        }
+        else {
+            $("#errorDiv").html(" 1 Picture for category!");
+            $("#errorDiv").show();
+        }
+    });
+</script>

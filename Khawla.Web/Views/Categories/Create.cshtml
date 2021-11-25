@@ -44,7 +44,7 @@
             },
             CategoryPictures: {
                 required: true,
-               
+
             }
         },
         messages: {
@@ -60,14 +60,14 @@
             },
             CategoryPictures: {
                 required: "This page needs an image",
-                
+
             },
         },
         errorClass: "text-danger"
     })
 
     $("#uploadCategoryPic").change(function () {
-        
+
         var picture = this.files;
         var picsLength = picture.length;
         var picsData = new FormData();
@@ -75,9 +75,9 @@
             picsData.append("picture", picture[i]);
         }
         var allpic = $("#picArea > img").length;
-       
+
         if (allpic<=0) {
-            
+
             $.ajax({
                 type: "post",
                 url: '@Url.Action("UploadPictures", "Shared")',
@@ -125,7 +125,7 @@
             })
                 .done(function (response) {
                     if (response.success) {
-                        window.location.href='@Url.Action("Index","Categories")',
+                        ReloadTable()
                         $("#FormModel").modal('hide');
                     }
                     else {
