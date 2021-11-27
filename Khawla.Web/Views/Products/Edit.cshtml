@@ -1,0 +1,151 @@
+﻿@model Khawla.Web.ViewModels.ProductsCreateViewModel
+<div class="modal-header">
+    <h5 class="modal-Name">Edit Product</h5>
+</div>
+<form id="UpdateTable" style="overflow: auto">
+    <div class="modal-body">
+        <input type="hidden" name="Id" value="@Model.Product.ID" />
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" name="Name" value="@Model.Product.Name" />
+        </div>
+
+        <div class="form-group">
+            <label for="Category">Category</label>
+            <select class="form-group" name="CategoryId">
+                @foreach (var category in Model.Categories)
+                {
+                    var selected = category.ID == Model.Product.CategoryId ? "selected" : string.Empty;
+                    <option @selected value="@category.ID">@category.Name</option>
+                }
+
+
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Summery</label>
+            <input class="form-control" name="Summery" value="@Model.Product.Summery" />
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input class="form-control" name="Description" value="@Model.Product.Description" />
+        </div>
+        <div class="form-group">
+            <label>Quantity</label>
+            <input class="form-control" name="Quantity" value="@Model.Product.Quantity" />
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input class="form-control" name="Price" value="@Model.Product.Price" />
+        </div>
+        
+        <div class="form-group">
+            <label for="uploadProductPic" class="btn btn-warning" style="cursor:pointer">
+                Update Pictures
+                @if (Model.ProductPictures != null && Model.ProductPictures.Count() > 0)
+                {
+                    <span id="existPicLength" class="badge badge-warning p-1">@Model.ProductPictures.Count() Pictures.</span>
+                }
+                <span id="picLength" class="badge badge-warning p-1" style="display:none"></span>
+            </label>
+            <input id="uploadProductPic" class="form-control" name="ProductPictures" type="file" style="display:none" multiple="multiple" />
+            <input type="hidden" id="pictureIds" name="ProductPictures" />
+            <div id="picsArea">
+                @if (Model.Product.ProductPictures != null && Model.Product.ProductPictures.Count > 0)
+                {
+                    foreach (var picture in Model.Product.ProductPictures)
+                    {
+                        <img src="~/FileStore/images/@picture.Picture.Url"style="width:200px;height:200px"v class="image img-thumbnail mt-2" data-id="@picture.PictureId" />
+                    }
+                }
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" id="UpdateBtn" class="btn btn-success">Update</button>
+            <button type="button" id="cancelBtn" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</form>
+
+    <script>
+    RemoveImageOnClick();
+    
+    $("#UpdateBtn").click(function () {
+
+        var picIds = [];
+
+        $("#picsArea .image").each(function () {
+            var picId = $(this).attr("data-id");
+
+            picIds.push(picId);
+        });
+
+        $("#pictureIds").val(picIds);
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("Edit", "Products")',
+            data: $("#UpdateTable").serialize()
+
+        })
+            .done(function (response) {
+
+                $("#tableContainer").html(response);
+                $('#FormModel').modal('hide');
+                //$("#contentArea").html('');
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+    });
+    $("#uploadProductPic").change(function () {
+        var pictures = this.files;
+        var picsLength = pictures.length;
+        if (picsLength > 5) {
+            alert("Please,Upload 5 Photo not more than that!");
+            picsLength = 5;
+        }
+        var picsData = new FormData();
+        for (var i = 0; i < picsLength; i++) {
+            picsData.append("picture", pictures[i]);
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPictures", "Shared")',
+            data: picsData,
+            dataType: "json",
+            processData: false,
+            contentType: false
+        })
+            .done(function (responses) {
+
+
+
+                for (var i = 0; i < responses.length; i++) {
+                    var picResponse = responses[i];
+                    AttachNewImage(picResponse.id, picResponse.url);
+
+                }
+                var count = $("#picsArea > img").length;
+                $("#picLength").empty();
+                $("#picLength").append(count + " pictures. ");
+                $("#piclength").show();
+                debugger
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
+    });
+
+    </script>
+

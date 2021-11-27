@@ -1,0 +1,162 @@
+﻿@model Khawla.Web.ViewModels.ProductsCreateViewModel
+<div class="modal-header">
+    <h5 class="modal-Name">Add Product</h5>
+</div>
+<form id="CreateTable" style="overflow: auto">
+    <div class="modal-body">
+
+
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="text" class="form-control" name="Name" id="Name" value="@Model.Name" />
+        </div>
+
+        <div class="form-group">
+            <label for="">Category</label>
+            <select class="form-group" name="CategoryId">
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.ID">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Summery">Summery</label>
+            <input type="text" class="form-control" name="Summery" id="Summery" value="@Model.Summery" />
+        </div>
+
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <input type="text" class="form-control" name="Description" id="Description" value="@Model.Description" />
+        </div>
+        <div class="form-group">
+            <label for="Quantity">Quantity</label>
+            <input type="text" class="form-control" name="Quantity" id="Quantity" value="@Model.Quantity" />
+        </div>
+        <div class="form-group">
+            <label for="Price">Price</label>
+            <input class="form-control" name="Price" id="Price" value="@Model.Price" />
+        </div>
+        <div class="form-group">
+            <label for="uploadProductPic" class="btn btn-warning" style="cursor:pointer">
+                Add Pictures
+                <span id="picLength" class="badge badge-warning p-1" style="display:none"></span>
+            </label>
+
+            <input id="uploadProductPic" class="form-control" name="ProductPictures" type="file" style="display:none" multiple="multiple" />
+            <input type="hidden" id="pictureIds" name="ProductPictures" />
+            <div id="picsArea"></div>
+        </div>
+        <div id="errorDiv" class="form-group alert alert-danger" style="display:none">
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="cancelBtn" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="ProductSaveBtn" type="button" class="btn btn-primary">Save changes</button>
+    </div>
+</form>
+
+<script>
+   
+    $("#CreateTable").validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 3,
+                maxlength: 150
+            },
+            Summery: {
+                required: true,
+                minlength: 10,
+                maxlength: 50
+            }
+        },
+        messages: {
+            Name: {
+                required: "Name is rquired.",
+                minlength: "Minmum length is 15",
+                maxlength: "Maximum length is 150"
+            },
+            Summery: {
+                required: "Summery is rquired.",
+                minlength: "Minmum length is 10",
+                maxlength: "Maximum length is 150"
+            }
+        },
+        errorClass: "text-danger"
+    })
+    $("#ProductSaveBtn").click(function () {
+        if ($("#CreateTable").valid()) {
+            var picIds = [];
+            $("#picsArea .image").each(function () {
+                var picId = $(this).attr("data-id");
+                picIds.push(picId);
+            });
+            $("#pictureIds").val(picIds);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create", "Products")',
+                data: $('#CreateTable').serialize(),
+            })
+            .done(function (response) {
+                if (response.success) {
+                    ReloadTable()
+                    $("#FormModel").modal('hide');
+                }
+                else {
+                    $("#errorDiv").html(response.message);
+                    $("#errorDiv").show();
+                }
+                //$("#tableContainer").html(response);
+                //$('#FormModel').modal('hide');
+                //$("#contentArea").html('');
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+        }
+    });
+    $("#uploadProductPic").change(function () {
+        var pictures = this.files;
+        var picsLength = pictures.length;
+        if (picsLength > 5) {
+            alert("Please,Upload 5 Photo not more than that!");
+            picsLength = 5;
+        }
+        var picsData = new FormData();
+        for (var i = 0; i < picsLength; i++) {
+            picsData.append("picture", pictures[i]);
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPictures", "Shared")',
+            data: picsData,
+            dataType: "json",
+            processData: false,
+            contentType: false
+        })
+            .done(function (responses) {
+                for (var i = 0; i < responses.length; i++) {
+                    var picResponse = responses[i];
+                    AttachNewImage(picResponse.id, picResponse.url);
+                }
+                var oldLength;
+                var newLength;
+                if ($("#picLength").text()) {
+                    oldLength = $("#picLength").text()[0];
+                    newLength = parseFloat(oldLength) + parseFloat(picsLength);
+                    $("picLength").empty();
+                }
+                else {
+                    newLength = picsLength;
+                }
+                $("#picLength").empty();
+                $("#picLength").append(newLength + " pictures. ");
+                $("#piclength").show();
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+</script>

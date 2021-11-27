@@ -27,7 +27,7 @@ namespace Khawla.Web.Controllers
             model.SearchTerm = search;
             model.Allcategories = CategoriesService.Instance.FilterCategories(search,pageNo.Value,pageSize);
 
-            var TotalCategory = CategoriesService.Instance.TotalCategoryCount();
+            var TotalCategory = CategoriesService.Instance.TotalCategoryCount(search);
 
             model.Pager = new Pager(TotalCategory, pageNo, pageSize);
 
@@ -94,6 +94,12 @@ namespace Khawla.Web.Controllers
                 { CategoryId = category.ID, PictureId = s }).ToList());
             }
             CategoriesService.Instance.UpdateCategory(category);
+
+            return RedirectToAction("CategoryList");
+        }
+        public ActionResult Delete(int Id)
+        {
+            CategoriesService.Instance.DeleteCategory(Id);
 
             return RedirectToAction("CategoryList");
         }

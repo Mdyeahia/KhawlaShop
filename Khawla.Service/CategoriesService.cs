@@ -52,10 +52,20 @@ namespace Khawla.Service
 
             return categoy.OrderByDescending(a => a.ID).Skip(skipCount).Take(pageSize).ToList();
         }
-        public int TotalCategoryCount()
+        public int TotalCategoryCount(string searchTerm)
         {
-            KhawlaDbContext context = new KhawlaDbContext();
-            return context.Categories.Count();
+            var context = new KhawlaDbContext();
+
+            var category = context.Categories.AsQueryable();
+            
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                category = category.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+
+            return category.Count();
+
         }
 
         public void UpdateCategory(Category category)
@@ -75,6 +85,18 @@ namespace Khawla.Service
         {
             KhawlaDbContext context = new KhawlaDbContext();
             context.Categories.Add(category);
+            context.SaveChanges();
+        }
+        public void DeleteCategory(int Id)
+        {
+            KhawlaDbContext context = new KhawlaDbContext();
+
+            var deleteCategory = context.Categories.Where(x => x.ID ==Id).Include(x => x.CategoryPictures).Include(x=>x.Products).FirstOrDefault();
+
+            context.CategoryPictures.RemoveRange(deleteCategory.CategoryPictures);
+            context.Products.RemoveRange(deleteCategory.Products);
+
+            context.Categories.Remove(deleteCategory);
             context.SaveChanges();
         }
     }

@@ -78,6 +78,7 @@
     <Compile Include="CategoriesService.cs" />
     <Compile Include="KhawlaSignInManager.cs" />
     <Compile Include="KhawlaUserManager.cs" />
+    <Compile Include="ProductsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedService.cs" />
   </ItemGroup>

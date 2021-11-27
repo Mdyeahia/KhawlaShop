@@ -26,5 +26,17 @@ namespace Khawla.Data
         {
             return new KhawlaDbContext();
         }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<CategoryPicture>()
+        //    .HasRequired(b => b.Category)
+        //    .WithMany(b => b.CategoryPictures)
+        //    .WillCascadeOnDelete(true);
+
+        //    modelBuilder.Entity<Product>()
+        //   .HasRequired(b => b.Category)
+        //   .WithRequiredPrincipal()
+        //   .WillCascadeOnDelete(true);
+        //}
     }
 }
