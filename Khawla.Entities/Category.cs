@@ -8,6 +8,7 @@ namespace Khawla.Entities
 {
     public class Category:BaseEntities
     {
+        public bool IsFeatured { get; set; }
         public  List<Product> Products { get; set; }
         public  virtual List<CategoryPicture> CategoryPictures { get; set; }
 

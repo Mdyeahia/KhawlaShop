@@ -1,4 +1,9 @@
 ﻿@model Khawla.Web.ViewModels.EditCategoryViewModel
+
+@{ 
+    var trueChecked = Model.category.IsFeatured ? "checked" : string.Empty;
+    var falseChecked = !Model.category.IsFeatured ? "checked" : string.Empty;
+}
 <div class="modal-header">
     <h5 class="modal-title">Edit Category</h5>
 </div>
@@ -12,6 +17,11 @@
         <div class="form-group">
             <label>Description</label>
             <input class="form-control" name="Description" value="@Model.category.Description" />
+        </div>
+        <div class=" form-group">
+            <label for="Name">Is Featured ?</label>
+            <input name="IsFeatured" type="radio" value="True"@trueChecked />True
+            <input name="IsFeatured" type="radio" value="False"@falseChecked />False
         </div>
         <div class="form-group">
             <label for="uploadCategoryPic" class="btn btn-warning" style="cursor:pointer">
@@ -29,7 +39,7 @@
                 {
                     foreach (var picture in Model.category.CategoryPictures)
                     {
-                        <img src="~/FileStore/images/@picture.Picture.Url"style="width:200px;height:200px" class="image img-thumbnail mt-2" data-id="@picture.PictureId" />
+                        <img src="~/FileStore/images/@picture.Picture.Url" style="width:200px;height:200px" class="image img-thumbnail mt-2" data-id="@picture.PictureId" />
                     }
                 }
             </div>

@@ -33,4 +33,10 @@ namespace Khawla.Web.ViewModels
         
         public Pager Pager { get; set; }
     }
+    public class ProductDetalisViewModel
+    {
+        public Product Product { get; set; }
+        
+    }
+
 }

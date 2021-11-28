@@ -48,6 +48,7 @@ namespace Khawla.Web.Controllers
 
                 newCategory.Name = model.Name;
                 newCategory.Description = model.Description;
+                newCategory.IsFeatured = model.IsFeatured;
                 if (!string.IsNullOrEmpty(model.CategoryPictures))
                 {
                     var pictureId = model.CategoryPictures
@@ -83,7 +84,7 @@ namespace Khawla.Web.Controllers
             category.ID = model.Id;
             category.Name = model.Name;
             category.Description = model.Description;
-
+            category.IsFeatured = model.IsFeatured;
             if (!string.IsNullOrEmpty(model.CategoryPictures))
             {
                 var pictureId = model.CategoryPictures

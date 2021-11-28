@@ -33,7 +33,7 @@ namespace Khawla.Service
         public List<Category> allCategory()
         {
             KhawlaDbContext context = new KhawlaDbContext();
-            return context.Categories.ToList();
+            return context.Categories.Include(x => x.CategoryPictures).Include("CategoryPictures.Picture").ToList();
         }
         public Category categoryById(int Id)
         {

@@ -115,29 +115,17 @@ namespace Khawla.Web.Controllers
             return RedirectToAction("ProductList");
         }
 
-        //[HttpGet]
-        //public ActionResult Details(int Id)
-        //{
-        //    DetailsProductViewModel model = new DetailsProductViewModel();
+        [HttpGet]
+        public ActionResult Details(int Id)
+        {
+            ProductDetalisViewModel model = new ProductDetalisViewModel();
 
+            model.Product = ProductsService.Instance.GetProductById(Id);
             
 
-        //    model.Product = ProductsService.Instance.GetProductById(Id);
 
-        //    model.EntityId = (int)EntitiesEnum.Product;
-
-        //    model.BidsAmount = model.Product.ActualAmount + model.Product.Bids.Sum(x => x.BidAmount);
-
-        //    var newBidder = model.Product.Bids.OrderByDescending(x => x.Timestamp).FirstOrDefault();
-
-        //    model.LatestBidder = newBidder != null ? newBidder.User : null;
-
-        //    model.Comment = CommentsService.Instance.GetComments(model.EntityId, Id);
-        //    model.RatingStar = CommentsService.Instance.RatingAverage(model.EntityId, Id);
-
-
-        //    return View(model);
-        //}
+            return View(model);
+        }
         [HttpPost]
         public ActionResult Delete(int Id)
         {

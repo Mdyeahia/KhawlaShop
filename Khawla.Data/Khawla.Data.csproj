@@ -59,6 +59,10 @@
     <Compile Include="Migrations\202111220607002_ProductCategpryPictureModelAdded.Designer.cs">
       <DependentUpon>202111220607002_ProductCategpryPictureModelAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111280255497_FeatureAddedToCategory.cs" />
+    <Compile Include="Migrations\202111280255497_FeatureAddedToCategory.Designer.cs">
+      <DependentUpon>202111280255497_FeatureAddedToCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -75,6 +79,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202111220607002_ProductCategpryPictureModelAdded.resx">
       <DependentUpon>202111220607002_ProductCategpryPictureModelAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111280255497_FeatureAddedToCategory.resx">
+      <DependentUpon>202111280255497_FeatureAddedToCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
