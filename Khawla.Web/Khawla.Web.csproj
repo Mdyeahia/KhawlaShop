@@ -173,6 +173,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
+    <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,6 +185,7 @@
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProductsViewModel.cs" />
+    <Compile Include="ViewModels\WidgetViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -192,6 +194,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\elegant-icons.css" />
+    <Content Include="Content\css\FeatureProduct.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\jquery-ui.min.css" />
     <Content Include="Content\css\nice-select.css" />
@@ -266,6 +269,7 @@
     <Content Include="Content\img\product\product-8.jpg" />
     <Content Include="Content\img\product\product-9.jpg" />
     <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\FeatureProduct.js" />
     <Content Include="Content\js\jquery-3.3.1.min.js" />
     <Content Include="Content\js\jquery-ui.min.js" />
     <Content Include="Content\js\jquery.nice-select.min.js" />
@@ -341,6 +345,9 @@
     <Content Include="Views\Products\Create.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Widgets\Products.cshtml" />
+    <Content Include="Views\Widgets\_CategoryDropDown.cshtml" />
+    <Content Include="Views\Widgets\_SearchingWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

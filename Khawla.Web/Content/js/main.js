@@ -16,21 +16,22 @@
     --------------------*/
     $(window).on('load', function () {
         $(".loader").fadeOut();
-        $("#preloder").delay(5).fadeOut("slow");
+        $("#preloder").delay(20).fadeOut("slow");
 
         /*------------------
             Gallery filter
         --------------------*/
-        $('.featured__controls li').on('click', function () {
-            $('.featured__controls li').removeClass('active');
-            $(this).addClass('active');
-        });
-        if ($('.featured__filter').length > 0) {
-            var containerEl = document.querySelector('.featured__filter');
-            var mixer = mixitup(containerEl);
-        }
+        //$('.featured__controls li').on('click', function () {
+        //    $('.featured__controls li').removeClass('active');
+        //    $(this).addClass('active');
+        //});
+        //if ($('.featured__filter').length > 0) {
+        //    var containerEl = document.querySelector('.featured__filter');
+        //    var mixer = mixitup(containerEl);
+        //}
+       
     });
-
+   
     /*------------------
         Background Set
     --------------------*/
@@ -53,8 +54,8 @@
     });
 
     /*------------------
-		Navigation
-	--------------------*/
+        Navigation
+    --------------------*/
     $(".mobile-menu").slicknav({
         prependTo: '#mobile-menu-wrap',
         allowParentLinks: true
@@ -96,7 +97,7 @@
     });
 
 
-    $('.hero__categories__all').on('click', function(){
+    $('.hero__categories__all').on('click', function () {
         $('.hero__categories ul').slideToggle(400);
     });
 
@@ -160,8 +161,8 @@
     });
 
     /*-----------------------
-		Price Range Slider
-	------------------------ */
+        Price Range Slider
+    ------------------------ */
     var rangeSlider = $(".price-range"),
         minamount = $("#minamount"),
         maxamount = $("#maxamount"),
@@ -186,8 +187,8 @@
     $("select").niceSelect();
 
     /*------------------
-		Single Product
-	--------------------*/
+        Single Product
+    --------------------*/
     $('.product__details__pic__slider img').on('click', function () {
 
         var imgurl = $(this).data('imgbigurl');
@@ -200,11 +201,11 @@
     });
 
     /*-------------------
-		Quantity change
-	--------------------- */
+        Quantity change
+    --------------------- */
     var proQty = $('.pro-qty');
-    //proQty.prepend('<span class="dec qtybtn">-</span>');
-    //proQty.append('<span class="inc qtybtn">+</span>');
+    proQty.prepend('<span class="dec qtybtn">-</span>');
+    proQty.append('<span class="inc qtybtn">+</span>');
     proQty.on('click', '.qtybtn', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
@@ -220,5 +221,7 @@
         }
         $button.parent().find('input').val(newVal);
     });
-
+    //$(function () {
+    //    flatIsotope();
+    //});
 })(jQuery);

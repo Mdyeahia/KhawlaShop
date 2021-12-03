@@ -1,20 +1,47 @@
 ﻿@model Khawla.Web.ViewModels.HomeViewModel
-<section class="categories">
-    <div class="container">
-        <div class="row">
-            <div class="categories__slider owl-carousel">
-               @if (Model.AllCategory != null && Model.AllCategory.Count > 0)
-               {
-                foreach(var category in Model.AllCategory)
-                   {
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="/FileStore/images/@category.CategoryPictures.Select(m=>m.Picture.Url).First()">
-                        <h5><a href="#">@category.Name</a></h5>
-                    </div>
+
+@if (Model != null && Model.AllCategory.Count > 0)
+{
+    @section HeroImage{
+
+        @foreach (var category in Model.AllCategory.Where(m => m.IsFeatured).FirstOrDefault().CategoryPictures.Select(m => m.Picture).Distinct())
+        {
+            <div class="hero__item set-bg" data-setbg="/FileStore/images/@category.Url">
+                <div class="hero__text">
+                    <span>FRUIT FRESH</span>
+                    <h2>Vegetable <br />100% Organic</h2>
+                    <p>Free Pickup and Delivery Available</p>
+                    <a href="#" class="primary-btn">SHOP NOW</a>
                 </div>
-                   }
-               }
+            </div>
+        }
+
+    }
+    <section class="categories">
+        <div class="container">
+            <div class="row">
+                <div class="categories__slider owl-carousel">
+                    @if (Model.AllCategory != null && Model.AllCategory.Count > 0)
+                    {
+                        foreach (var category in Model.AllCategory)
+                        {
+                            <div class="col-lg-3">
+                                <div class="categories__item set-bg" data-setbg="/FileStore/images/@category.CategoryPictures.Select(m => m.Picture.Url).First()">
+                                    <h5><a href="#">@category.Name</a></h5>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
             </div>
         </div>
+    </section>
+}
+<!-- Categories Section End -->
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+
+        @{Html.RenderAction("Products", "Widgets", new { isFeatured = true, isLatestProduct = false });}
     </div>
 </section>
