@@ -130,14 +130,7 @@ namespace Khawla.Service
                 .Include("ProductPictures.Picture")
                 .Where(c => c.Category.IsFeatured == true).Take(8).ToList();
         }
-        public List<Product> GetLatestProduct(int numberofProducts)
-        {
-            KhawlaDbContext context = new KhawlaDbContext();
-            return context.Products.OrderByDescending(p => p.ID)
-                .Take(numberofProducts).Include(p => p.Category)
-                    .ToList();
-        }
-        
+       
         public List<Product> GetWidgetProductsbyCategory(int categoryID, int pageSize)
         {
             var context = new KhawlaDbContext();
@@ -149,6 +142,17 @@ namespace Khawla.Service
                     .ToList();
             
         }
+        public List<Product> GetLatestProduct(int numberofProducts)
+        {
+            KhawlaDbContext context = new KhawlaDbContext();
+            return context.Products.OrderByDescending(p => p.ID)
+                .Include(c => c.ProductPictures)
+                .Include("ProductPictures.Picture")
+                .Take(numberofProducts).Include(p => p.Category)
+                    .ToList();
+        }
+
+        
         public void SaveProduct(Product product)
         {
             KhawlaDbContext context = new KhawlaDbContext();

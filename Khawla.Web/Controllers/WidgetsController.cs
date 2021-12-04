@@ -11,17 +11,27 @@ namespace Khawla.Web.Controllers
     public class WidgetsController : Controller
     {
         // GET: Widgets
-        public ActionResult Products(bool isFeatured,bool isLatestProduct,int? CategoryID = 0)
+        public ActionResult Products(bool isFeatured,bool isLatestProduct, bool topRated, bool topReview,int? CategoryID = 0)
         {
             
             ProductsWidgetViewModel model = new ProductsWidgetViewModel();
             model.Isfeatured = isFeatured;
             model.IsLatestProduct = isLatestProduct;
+            model.toprated = topRated;
+            model.topreview = topReview;
             if (isFeatured)
             {
                 model.AllWidgetProduct = ProductsService.Instance.GetFeatureProduct();
             }
             else if (isLatestProduct)
+            {
+                model.AllWidgetProduct = ProductsService.Instance.GetLatestProduct(12);
+            }
+            else if (topRated)
+            {
+                model.AllWidgetProduct = ProductsService.Instance.GetLatestProduct(12);
+            }
+            else if (topReview)
             {
                 model.AllWidgetProduct = ProductsService.Instance.GetLatestProduct(12);
             }
@@ -60,5 +70,6 @@ namespace Khawla.Web.Controllers
 
             return PartialView("~/Views/Widgets/_SearchingWidget.cshtml", model);
         }
+       
     }
 }

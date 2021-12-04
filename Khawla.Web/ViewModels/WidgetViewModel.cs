@@ -10,7 +10,8 @@ namespace Khawla.Web.ViewModels
     {
         public bool Isfeatured { get; set; }
         public bool IsLatestProduct { get; set; }
-        
+        public bool toprated { get; set; }
+        public bool topreview { get; set; }
         public List<Product> AllWidgetProduct { get; set; }
         public List<Category> AllWidgetCategory { get; set; }
     }
@@ -18,4 +19,5 @@ namespace Khawla.Web.ViewModels
     {
         public List<Category> AllCategory { get; set; }
     }
+   
 }

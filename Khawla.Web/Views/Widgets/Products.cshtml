@@ -10,39 +10,160 @@
                     <div class="section-title">
                         <h2>Featured Product</h2>
                     </div>
-                    <div id="featureProductDiv"class="featured__controls">
-                        
-                            <button class="btn featureProduct active" onclick="filterSelection('all')"> Show all</button>
-                            @foreach (var category in Model.AllWidgetProduct.Select(m => m.Category).ToList().Distinct())
-                            {
-                                <button class="btn featureProduct" onclick="filterSelection('@category.Name')"> @category.Name</button>
-                            }
+                    <div id="featureProductDiv" class="featured__controls">
 
-                       
+                        <button class="btn featureProduct active" onclick="filterSelection('all')"> Show all</button>
+                        @foreach (var category in Model.AllWidgetProduct.Select(m => m.Category).ToList().Distinct())
+                        {
+                            <button class="btn featureProduct" onclick="filterSelection('@category.Name')"> @category.Name</button>
+                        }
+
+
                     </div>
                 </div>
             </div>
             <div class="row featured__filter">
                 @foreach (var product in Model.AllWidgetProduct)
                 {
-                <div class="col-lg-3 col-md-4 col-sm-6 column @product.Category.Name">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="/FileStore/images/@product.ProductPictures.Select(m=>m.Picture.Url).First()">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="@Url.Action("Details", "Products", new { ID = product.ID })">@product.Name</a></h6>
-                            <h5>$30.00</h5>
+                    <div class="col-lg-3 col-md-4 col-sm-6 column @product.Category.Name">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="/FileStore/images/@product.ProductPictures.Select(m=>m.Picture.Url).First()">
+                                <ul class="featured__item__pic__hover">
+                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="@Url.Action("Details", "Products", new { ID = product.ID })">@product.Name</a></h6>
+                                <h5>$30.00</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
             </div>
         </div>
-        </section>
+    </section>
 }
+@if (Model != null && Model.AllWidgetProduct != null && Model.IsLatestProduct)
+{
+    <div class="col-lg-4 col-md-6">
+        <div class="latest-product__text">
+            <h4>Latest Products</h4>
+            <div class="latest-product__slider owl-carousel">
+                <div class="latest-prdouct__slider__item">
+                    @foreach (var product in Model.AllWidgetProduct.Take(3))
+                    {
+                        <a href="@Url.Action("Details", "Products", new { ID = product.ID })" class="latest-product__item">
+                            <div class="latest-product__item__pic">
+                                <img src="/FileStore/images/@product.ProductPictures.Select(m => m.Picture.Url).First()" alt="">
+                            </div>
+                            <div class="latest-product__item__text">
+                                <h6>@product.Name</h6>
+                                <span>@product.Price</span>
+                            </div>
+                        </a>
+                    }
+
+                </div>
+                <div class="latest-prdouct__slider__item">
+                    @foreach (var product in Model.AllWidgetProduct.Skip(3).Take(3))
+                    {
+                        <a href="@Url.Action("Details", "Products", new { ID = product.ID })" class="latest-product__item">
+                            <div class="latest-product__item__pic">
+                                <img src="/FileStore/images/@product.ProductPictures.Select(m => m.Picture.Url).First()" alt="">
+                            </div>
+                            <div class="latest-product__item__text">
+                                <h6>@product.Name</h6>
+                                <span>@product.Price</span>
+                            </div>
+                        </a>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (Model != null && Model.AllWidgetProduct != null && Model.toprated)
+{
+<div class="col-lg-4 col-md-6">
+    <div class="latest-product__text">
+        <h4>Top Rated Products</h4>
+        <div class="latest-product__slider owl-carousel">
+            <div class="latest-prdouct__slider__item">
+                @foreach (var product in Model.AllWidgetProduct.Take(3))
+                {
+                    <a href="@Url.Action("Details", "Products", new { ID = product.ID })" class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="/FileStore/images/@product.ProductPictures.Select(m => m.Picture.Url).First()" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>@product.Name</h6>
+                            <span>@product.Price</span>
+                        </div>
+                    </a>
+                }
+
+            </div>
+            <div class="latest-prdouct__slider__item">
+                @foreach (var product in Model.AllWidgetProduct.Skip(3).Take(3))
+                {
+                    <a href="@Url.Action("Details", "Products", new { ID = product.ID })" class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="/FileStore/images/@product.ProductPictures.Select(m => m.Picture.Url).First()" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>@product.Name</h6>
+                            <span>@product.Price</span>
+                        </div>
+                    </a>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+}
+@if (Model != null && Model.AllWidgetProduct != null && Model.topreview)
+{
+<div class="col-lg-4 col-md-6">
+    <div class="latest-product__text">
+        <h4>Review Products</h4>
+        <div class="latest-product__slider owl-carousel">
+            <div class="latest-prdouct__slider__item">
+                @foreach (var product in Model.AllWidgetProduct.Take(3))
+                {
+                    <a href="@Url.Action("Details", "Products", new { ID = product.ID })" class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="/FileStore/images/@product.ProductPictures.Select(m => m.Picture.Url).First()" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>@product.Name</h6>
+                            <span>@product.Price</span>
+                        </div>
+                    </a>
+                }
+
+            </div>
+            <div class="latest-prdouct__slider__item">
+                @foreach (var product in Model.AllWidgetProduct.Skip(3).Take(3))
+                {
+                    <a href="@Url.Action("Details", "Products", new { ID = product.ID })" class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="/FileStore/images/@product.ProductPictures.Select(m => m.Picture.Url).First()" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>@product.Name</h6>
+                            <span>@product.Price</span>
+                        </div>
+                    </a>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+}
+
 <script src="~/Content/js/FeatureProduct.js"></script>
