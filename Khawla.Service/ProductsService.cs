@@ -88,6 +88,97 @@ namespace Khawla.Service
             return product.OrderByDescending(a => a.ID).Skip(skipCount).Take(pageSize).ToList();
 
         }
+        public List<Product> SearchProducts(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryId, int? sortBy, int pageNo, int pageSize)
+        {
+            using (var context = new KhawlaDbContext())
+            {
+                var products = context.Products.ToList();
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    products = products.Where(p => p.Name.ToLower().Contains(searchTerm.ToLower())).ToList();
+                }
+
+                if (maximumPrice.HasValue)
+                {
+                    products = products.Where(p => p.Price >= minimumPrice.Value).ToList();
+                }
+
+                if (minimumPrice.HasValue)
+                {
+                    products = products.Where(p => p.Price <= maximumPrice.Value).ToList();
+                }
+
+                if (categoryId.HasValue)
+                {
+                    products = products.Where(p => p.Category.ID == categoryId.Value).ToList();
+                }
+
+                if (sortBy.HasValue)
+                {
+                    switch (sortBy.Value)
+                    {
+                        case 2:
+                            products = products.OrderByDescending(x => x.ID).ToList();
+                            break;
+                        case 3:
+                            products = products.OrderBy(x => x.Price).ToList();
+                            break;
+                        default:
+                            products = products.OrderByDescending(x => x.Price).ToList();
+                            break;
+                    }
+                }
+
+                //return products;
+                return products.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+            }
+        }
+        public int SearchProductsCount(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryId,
+          int? sortBy)
+        {
+            using (var context = new KhawlaDbContext())
+            {
+                var products = context.Products.ToList();
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    products = products.Where(p => p.Name.ToLower().Contains(searchTerm.ToLower())).ToList();
+                }
+
+                if (maximumPrice.HasValue)
+                {
+                    products = products.Where(p => p.Price >= minimumPrice.Value).ToList();
+                }
+
+                if (minimumPrice.HasValue)
+                {
+                    products = products.Where(p => p.Price <= maximumPrice.Value).ToList();
+                }
+
+                if (categoryId.HasValue)
+                {
+                    products = products.Where(p => p.Category.ID == categoryId.Value).ToList();
+                }
+
+                if (sortBy.HasValue)
+                {
+                    switch (sortBy.Value)
+                    {
+                        case 2:
+                            products = products.OrderByDescending(x => x.ID).ToList();
+                            break;
+                        case 3:
+                            products = products.OrderBy(x => x.Price).ToList();
+                            break;
+                        default:
+                            products = products.OrderByDescending(x => x.Price).ToList();
+                            break;
+                    }
+                }
+
+                return products.Count;
+
+            }
+        }
         public int GetProductCount(int? categoryId, string searchTerm)
         {
             var context = new KhawlaDbContext();
@@ -152,7 +243,13 @@ namespace Khawla.Service
                     .ToList();
         }
 
-        
+        public int GetMaximumPrice()
+        {
+            KhawlaDbContext context = new KhawlaDbContext();
+            
+           return (int)(context.Products.Max(p => p.Price));
+            
+        }
         public void SaveProduct(Product product)
         {
             KhawlaDbContext context = new KhawlaDbContext();

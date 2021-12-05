@@ -57,6 +57,7 @@
     <Compile Include="BaseEntities.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="CategoryPicture.cs" />
+    <Compile Include="Code\Enums.cs" />
     <Compile Include="KhawlaUser.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Product.cs" />

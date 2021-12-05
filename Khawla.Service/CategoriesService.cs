@@ -67,12 +67,12 @@ namespace Khawla.Service
             return category.Count();
 
         }
-        //public List<Category> GetFeatureCategory()
-        //{
-        //    var context = new KhawlaDbContext();
+        public List<Category> GetFeatureCategories()
+        {
+            var context = new KhawlaDbContext();
 
-        //    return context.Categories.Include(c=>c.Products).Where(c => c.IsFeatured==true).Take(4).ToList();
-        //}
+            return context.Categories.Include(c => c.Products).Where(c => c.IsFeatured == true).Take(4).ToList();
+        }
 
         public void UpdateCategory(Category category)
         {
