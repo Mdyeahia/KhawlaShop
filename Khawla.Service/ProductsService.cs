@@ -92,7 +92,9 @@ namespace Khawla.Service
         {
             using (var context = new KhawlaDbContext())
             {
-                var products = context.Products.ToList();
+                var products = context.Products.Include(p => p.Category)
+                .Include(p => p.ProductPictures)
+                .Include("ProductPictures.PIcture").ToList();
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
                     products = products.Where(p => p.Name.ToLower().Contains(searchTerm.ToLower())).ToList();

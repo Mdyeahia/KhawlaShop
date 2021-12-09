@@ -13,7 +13,7 @@ namespace Khawla.Web.Controllers
         // GET: Shop
         public ActionResult Index(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryID, int? sortBy, int? pageNo)
         {
-            var pageSize = 3;
+            var pageSize = 12;
             pageNo = pageNo ?? 1;
 
             ShopViewModel model = new ShopViewModel();
