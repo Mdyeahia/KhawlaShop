@@ -31,7 +31,7 @@
         //}
        
     });
-   
+    
     /*------------------
         Background Set
     --------------------*/
@@ -224,6 +224,7 @@
         $button.parent().find('input').val(newVal);
     });
     //$(function () {
-    //    flatIsotope();
+    //    hideLoader();
+    //    showLoader();
     //});
 })(jQuery);

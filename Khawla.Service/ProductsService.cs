@@ -94,7 +94,7 @@ namespace Khawla.Service
             {
                 var products = context.Products.Include(p => p.Category)
                 .Include(p => p.ProductPictures)
-                .Include("ProductPictures.PIcture").ToList();
+                .Include("ProductPictures.Picture").ToList();
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
                     products = products.Where(p => p.Name.ToLower().Contains(searchTerm.ToLower())).ToList();
@@ -251,6 +251,13 @@ namespace Khawla.Service
             
            return (int)(context.Products.Max(p => p.Price));
             
+        }
+        public int GetMinimumPrice()
+        {
+            KhawlaDbContext context = new KhawlaDbContext();
+
+            return (int)(context.Products.Min(p => p.Price));
+
         }
         public void SaveProduct(Product product)
         {

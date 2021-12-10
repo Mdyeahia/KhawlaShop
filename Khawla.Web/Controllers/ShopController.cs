@@ -23,6 +23,7 @@ namespace Khawla.Web.Controllers
             model.SearchTerm = searchTerm;
             model.FeaturedCategories = CategoriesService.Instance.GetFeatureCategories();
             model.MaximumPrice = ProductsService.Instance.GetMaximumPrice();
+            model.MinimumPrice = ProductsService.Instance.GetMinimumPrice();
             pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
             model.CategoryID = categoryID;
             model.SortBy = sortBy;
@@ -35,7 +36,7 @@ namespace Khawla.Web.Controllers
         }
         public ActionResult FilterProducts(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryID, int? sortBy, int? pageNo)
         {
-            var pageSize = 3;
+            var pageSize = 12;
             pageNo = pageNo ?? 1;
 
             FilterProductsViewModel model = new FilterProductsViewModel();

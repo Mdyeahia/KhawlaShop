@@ -1120,9 +1120,10 @@ ol {
 	margin-top: 20px;
 }
 
-.price-range-wrap .range-slider .price-input {
-	position: relative;
-}
+	.price-range-wrap .range-slider .price-input {
+		position: relative;
+		
+	}
 
 .price-range-wrap .range-slider .price-input:after {
 	position: absolute;
@@ -1131,7 +1132,7 @@ ol {
 	height: 1px;
 	width: 5px;
 	background: #dd2222;
-	content: "";
+	
 }
 
 .price-range-wrap .range-slider .price-input input {
@@ -1141,6 +1142,7 @@ ol {
 	max-width: 20%;
 	border: none;
 	display: inline-block;
+	background-color:inherit;
 }
 
 .price-range-wrap .price-range {
