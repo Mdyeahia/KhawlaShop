@@ -351,6 +351,7 @@
     <Content Include="Views\Widgets\_CategoryDropDown.cshtml" />
     <Content Include="Views\Widgets\_SearchingWidget.cshtml" />
     <Content Include="Views\Shop\Index.cshtml" />
+    <Content Include="Views\Shop\FilterProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

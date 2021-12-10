@@ -1,26 +1,28 @@
-﻿@model Khawla.Web.ViewModels.ShopViewModel
-@using Khawla.Entities.Code
+﻿@using Khawla.Entities.Code
+@using Khawla.Web.Controllers
+
+@model Khawla.Web.ViewModels.ShopViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <!-- Breadcrumb Section Begin -->
 @*<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="breadcrumb__text">
-                    <h2>Organi Shop</h2>
-                    <div class="breadcrumb__option">
-                        <a href="./index.html">Home</a>
-                        <span>Shop</span>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Organi Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">Home</a>
+                            <span>Shop</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>*@
+    </section>*@
 <!-- Breadcrumb Section End -->
 <!-- Product Section Begin -->
 <section class="product spad">
@@ -43,7 +45,7 @@
                         <h4>Price</h4>
                         <div class="price-range-wrap">
                             <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                 data-min="10" data-max="540">
+                                 data-min="10" data-max="@Model.MaximumPrice">
                                 <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
                                 <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                                 <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
@@ -56,7 +58,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <div class="sidebar__item">
                         <div class="latest-product__text">
                             <h4>Latest Products</h4>
@@ -125,13 +127,13 @@
                 </div>
             </div>
             <div class="col-lg-9 col-md-7">
-                
+
                 <div class="filter__item">
                     <div class="row">
                         <div class="col-lg-4 col-md-5">
                             <div class="filter__sort">
                                 <span>Sort By</span>
-                                <select onchange="location = this.value;">
+                                <select onChange="window.location.redirect(this.value)">
                                     <option data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.Default, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Default ? "active" : string.Empty : string.Empty)">Default - Newest</option>
                                     <option data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.Popularity, categoryID = Model.CategoryID  })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Popularity ? "active" : string.Empty : string.Empty)">Popularity</option>
                                     <option data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.PriceLowToHigh, categoryID = Model.CategoryID  })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceLowToHigh ? "active" : string.Empty : string.Empty)">Price: low to high</option>
@@ -153,35 +155,95 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    @foreach (var product in Model.Products)
-                    {
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="/FileStore/images/@product.ProductPictures.Select(m=>m.Picture.Url).First()">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">@product.Name</a></h6>
-                                    <h5>@product.Price</h5>
-                                </div>
-                            </div>
-                        </div>
+
+                <div id="productsDiv">
+
+                    @{
+                        var filterProductsViewModel = new FilterProductsViewModel();
+                        filterProductsViewModel.Products = Model.Products;
+                        filterProductsViewModel.Pager = Model.Pager;
+                        filterProductsViewModel.CategoryID = Model.CategoryID;
+                        filterProductsViewModel.SortBy = Model.SortBy;
+
+
+                        Html.RenderPartial("FilterProducts", filterProductsViewModel);
                     }
 
                 </div>
-                <div class="product__pagination">
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-                </div>
+
             </div>
         </div>
     </div>
 </section>
 <!-- Product Section End -->
+<script>
+    var callTimeout;
+    var maxminrange = $(".price-range");
+    var rangeSlider = $(".price-range").slider({
+
+
+        range: true,
+        min: maxminrange.data('min'),
+        max: maxminrange.data('max'),
+        values: [10,@Model.MaximumPrice],
+        slide: function (event, ui) {
+            var minamount = ui.values[0];
+            var maxamount = ui.values[1];
+
+            $("#minamount").val('$' + minamount);
+            $("#maxamount").val('$' + maxamount);
+            clearTimeout(callTimeout);
+            callTimeout = setTimeout(PriceRangeChange, 500);
+        }
+    });
+
+
+    $(".dataLink").click(function () {
+        var url = $(this).attr("data-href");
+        if (url != "" || url != undefined) {
+            GetData(url);
+        }
+    });
+    function GetData(dUrl){
+        console.log("getdata in");
+        /*showLoader();*/
+        $.ajax({
+                url: dUrl,
+                data: {
+                    minimumPrice: rangeSlider.slider("values", 0),
+                    maximumPrice: rangeSlider.slider("values", 1)
+                }
+            })
+            .done(function (response) {
+                console.log("done");
+                $("#productsDiv").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("fail");
+                alert("FAIL");
+            })
+            .always(function(){
+                console.log("always");
+                hideLoader();
+            });
+        console.log("getdata out");
+    }
+    function PriceRangeChange(){
+        $.ajax({
+                url: '@Url.Action("FilterProducts", "Shop")',
+                data: {
+                    searchTerm: $("#SearchTerm").val(),
+                    sortBy: $("#SortBy").val(),
+                    categoryID: $("#CategoryID").val(),
+                    minimumPrice: rangeSlider.slider("values", 0),
+                    maximumPrice: rangeSlider.slider("values", 1)
+                }
+            })
+            .done(function (response) {
+                $("#productsDiv").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    }
+</script>
