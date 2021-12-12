@@ -22,6 +22,7 @@ namespace Khawla.Web.Controllers
 
             model.SearchTerm = searchTerm;
             model.FeaturedCategories = CategoriesService.Instance.GetFeatureCategories();
+            model.AllCategory= CategoriesService.Instance.allCategory();
             model.MaximumPrice = ProductsService.Instance.GetMaximumPrice();
             model.MinimumPrice = ProductsService.Instance.GetMinimumPrice();
             pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;

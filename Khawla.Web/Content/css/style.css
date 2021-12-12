@@ -1093,14 +1093,15 @@ ol {
 	margin-bottom: 25px;
 }
 
+
 .sidebar__item ul li {
 	list-style: none;
 }
 
 .sidebar__item ul li a {
-	font-size: 16px;
+	font-size: 15px;
 	color: #1c1c1c;
-	line-height: 39px;
+	line-height: 35px;
 	display: block;
 }
 

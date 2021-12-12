@@ -8,7 +8,7 @@
 }
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <!-- Breadcrumb Section Begin -->
-@*<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+<section class="breadcrumb-section set-bg" data-setbg="/Content/img/breadcrumb.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-    </section>*@
+</section>
 <!-- Breadcrumb Section End -->
 <!-- Product Section Begin -->
 <section class="product spad">
@@ -31,14 +31,16 @@
             <div class="col-lg-3 col-md-5">
                 <div class="sidebar">
                     <div class="sidebar__item">
-                        <h5 class="widget-title">
-                            Sort By
-                        </h5>
+                        <h4 class="widget-title">
+                            Products Categories
+                        </h4>
                         <ul>
-                            <li><a data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.Default, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Default ? "active" : string.Empty : string.Empty)">Default - Newest</a></li>
-                            <li><a data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.Popularity, categoryID = Model.CategoryID  })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.Popularity ? "active" : string.Empty : string.Empty)">Popularity</a></li>
-                            <li><a data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.PriceLowToHigh, categoryID = Model.CategoryID  })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceLowToHigh ? "active" : string.Empty : string.Empty)">Price: low to high</a></li>
-                            <li><a data-href="@Url.Action("FilterProducts", "Shop", new { sortBy = (int)SortByEnums.PriceHighToLow, categoryID = Model.CategoryID  })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == (int)SortByEnums.PriceHighToLow ? "active" : string.Empty : string.Empty)">Price: high to low</a></li>
+                            @foreach (var category in Model.AllCategory)
+                            {
+                                <li><a href="@Url.Action("FilterProducts", "Shop", new {categoryID=category.ID})">@category.Name</a></li>
+                            }
+
+
                         </ul>
                     </div>
                     <div class="sidebar__item">
@@ -61,7 +63,7 @@
 
                     <div class="sidebar__item">
                         <div class="latest-product__text">
-                            <h4>Latest Products</h4>
+                            <h4>Sale Off</h4>
                             <div class="latest-product__slider owl-carousel">
                                 <div class="latest-prdouct__slider__item">
                                     <a href="#" class="latest-product__item">
@@ -133,7 +135,7 @@
                         <div class="col-lg-4 col-md-5">
                             <div class="filter__sort">
                                 <span>Sort By</span>
-                                <select class="enumselect">
+                                <select class="ShopSortselect">
                                     <option value="@((int)SortByEnums.Default)">Default</option>
                                     <option value="@((int)SortByEnums.Popularity)">popularity</option>
                                     <option value="@((int)SortByEnums.PriceLowToHigh)">low to high</option>
@@ -177,14 +179,22 @@
 <!-- Product Section End -->
 <script>
 
-    $(".enumselect").change(function() {
+    $(".sidebar__item a").click(function (e) {
+        e.preventDefault();
+        $('#productsDiv').hide();
+        $('#productsDiv').load($(this).attr("href")).delay(500).fadeIn('slow');
+    });
+
+    $(".ShopSortselect").change(function() {
 
         $.ajax({
 
             url: '@Url.Action("FilterProducts", "Shop")',
             data: {
 
-                sortBy: $(".enumselect").val()
+                sortBy: $(".ShopSortselect").val(),
+                categoryID: $("#CategoryID").val()
+                
             },
             beforeSend: function () {
                 $("#productsDiv").hide();

@@ -11,3 +11,23 @@
         <button type="button"id="searchBtn" class="site-btn">SEARCH</button>
     </form>
 </div>
+<script>
+    $("#searchBtn").click(function () {
+        $.ajax({
+            type:'get',
+            url: '@Url.Action("FilterProducts", "Shop")',
+            data: {
+                searchTerm: $("#searchTxt").val(),
+                
+               /* categoryID: $("#CategoryID").val(),*/
+                
+            }
+        })
+            .done(function (response) {
+                $("#productsDiv").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+</script>

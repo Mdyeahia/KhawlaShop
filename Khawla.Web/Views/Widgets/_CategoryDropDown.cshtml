@@ -6,12 +6,12 @@
         <div class="hero__categories">
             <div class="hero__categories__all">
                 <i class="fa fa-bars"></i>
-                <span>All departments</span>
+                <span class="categoryDrop">All departments</span>
             </div>
             <ul>
                 @foreach (var category in Model.AllCategory)
                 {
-                    <li><a href="#">@category.Name</a></li>
+                    <li><a href="@Url.Action("Index", "Shop", new {categoryID=category.ID})">@category.Name</a></li>
                 }
 
 
