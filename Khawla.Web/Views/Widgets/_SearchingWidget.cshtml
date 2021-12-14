@@ -24,7 +24,12 @@
             }
         })
             .done(function (response) {
+                resetSlider();
                 $("#productsDiv").html(response);
+                $('html,body').animate({
+                    scrollTop: $(".TotalproductDiv").offset().top
+                },
+                    1500);
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");

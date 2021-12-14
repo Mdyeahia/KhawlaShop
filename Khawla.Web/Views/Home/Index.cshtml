@@ -49,9 +49,11 @@
 <section class="latest-product spad">
     <div class="container">
         <div class="row">
-            @{Html.RenderAction("Products", "Widgets", new { isFeatured = false, isLatestProduct = true, topRated = false, topReview = false });}
-            @{Html.RenderAction("Products", "Widgets", new { isFeatured = false, isLatestProduct = false, topRated = true, topReview = false });}
-            @{Html.RenderAction("Products", "Widgets", new { isFeatured = false, isLatestProduct = false, topRated = false, topReview = true });}
+            <div class="col-lg-4 col-md-6">
+                @{Html.RenderAction("Products", "Widgets", new { isFeatured = false, isLatestProduct = true, topRated = false, topReview = false });}
+            </div>
+                @{Html.RenderAction("Products", "Widgets", new { isFeatured = false, isLatestProduct = false, topRated = true, topReview = false });}
+                @{Html.RenderAction("Products", "Widgets", new { isFeatured = false, isLatestProduct = false, topRated = false, topReview = true });}
+            </div>
         </div>
-    </div>
 </section>

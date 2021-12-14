@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-5">
                 <div class="sidebar">
-                    <div class="sidebar__item">
+                    <div class="categorysidebar sidebar__item">
                         <h4 class="widget-title">
                             Products Categories
                         </h4>
@@ -62,79 +62,17 @@
                     </div>
 
                     <div class="sidebar__item">
-                        <div class="latest-product__text">
-                            <h4>Sale Off</h4>
-                            <div class="latest-product__slider owl-carousel">
-                                <div class="latest-prdouct__slider__item">
-                                    <a href="#" class="latest-product__item">
-                                        <div class="latest-product__item__pic">
-                                            <img src="img/latest-product/lp-1.jpg" alt="">
-                                        </div>
-                                        <div class="latest-product__item__text">
-                                            <h6>Crab Pool Security</h6>
-                                            <span>$30.00</span>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="latest-product__item">
-                                        <div class="latest-product__item__pic">
-                                            <img src="img/latest-product/lp-2.jpg" alt="">
-                                        </div>
-                                        <div class="latest-product__item__text">
-                                            <h6>Crab Pool Security</h6>
-                                            <span>$30.00</span>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="latest-product__item">
-                                        <div class="latest-product__item__pic">
-                                            <img src="img/latest-product/lp-3.jpg" alt="">
-                                        </div>
-                                        <div class="latest-product__item__text">
-                                            <h6>Crab Pool Security</h6>
-                                            <span>$30.00</span>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="latest-prdouct__slider__item">
-                                    <a href="#" class="latest-product__item">
-                                        <div class="latest-product__item__pic">
-                                            <img src="img/latest-product/lp-1.jpg" alt="">
-                                        </div>
-                                        <div class="latest-product__item__text">
-                                            <h6>Crab Pool Security</h6>
-                                            <span>$30.00</span>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="latest-product__item">
-                                        <div class="latest-product__item__pic">
-                                            <img src="img/latest-product/lp-2.jpg" alt="">
-                                        </div>
-                                        <div class="latest-product__item__text">
-                                            <h6>Crab Pool Security</h6>
-                                            <span>$30.00</span>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="latest-product__item">
-                                        <div class="latest-product__item__pic">
-                                            <img src="img/latest-product/lp-3.jpg" alt="">
-                                        </div>
-                                        <div class="latest-product__item__text">
-                                            <h6>Crab Pool Security</h6>
-                                            <span>$30.00</span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        @{Html.RenderAction("Products", "Widgets", new { isFeatured = false, isLatestProduct = true, topRated = false, topReview = false });}
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-7">
+            <div class="TotalproductDiv col-lg-9 col-md-7">
 
                 <div class="filter__item">
                     <div class="row">
                         <div class="col-lg-4 col-md-5">
                             <div class="filter__sort">
-                                <span>Sort By</span>
+                                <span>Sort by</span>
                                 <select class="ShopSortselect">
                                     <option value="@((int)SortByEnums.Default)">Default</option>
                                     <option value="@((int)SortByEnums.Popularity)">popularity</option>
@@ -154,6 +92,7 @@
                                 <span class="icon_ul"></span>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -184,7 +123,11 @@
         $('#productsDiv').hide();
         $('#productsDiv').load($(this).attr("href")).delay(500).fadeIn('slow');
     });
+    $(".categorysidebar a").click(function (e) {
+        $("#searchTxt").val('');
+        resetSlider();
 
+    });
     $(".ShopSortselect").change(function() {
 
         $.ajax({
@@ -193,8 +136,8 @@
             data: {
 
                 sortBy: $(".ShopSortselect").val(),
-                categoryID: $("#CategoryID").val()
-                
+                categoryID: $("#CategoryID").val(),
+                searchTerm: $("#searchTxt").val()
             },
             beforeSend: function () {
                 $("#productsDiv").hide();
@@ -284,5 +227,12 @@
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
             });
+    }
+    function resetSlider() {
+        var $slider = $(".price-range");
+        $slider.slider("values", 0, @Model.MinimumPrice);
+        $slider.slider("values", 1, @Model.MaximumPrice);
+        $("#minamount").val('@Model.MinimumPrice');
+        $("#maxamount").val('@Model.MaximumPrice');
     }
 </script>
