@@ -14,6 +14,9 @@ namespace Khawla.Entities
 
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+
+        public int? SubCategoryId { get; set; }
+        public virtual SubCategory SubCategory { get; set; }
         public List<ProductPicture> ProductPictures { get; set; }
     }
 }

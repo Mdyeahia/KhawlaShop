@@ -63,6 +63,10 @@
     <Compile Include="Migrations\202111280255497_FeatureAddedToCategory.Designer.cs">
       <DependentUpon>202111280255497_FeatureAddedToCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112161526123_SubCategoryAdded.cs" />
+    <Compile Include="Migrations\202112161526123_SubCategoryAdded.Designer.cs">
+      <DependentUpon>202112161526123_SubCategoryAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -82,6 +86,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111280255497_FeatureAddedToCategory.resx">
       <DependentUpon>202111280255497_FeatureAddedToCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112161526123_SubCategoryAdded.resx">
+      <DependentUpon>202112161526123_SubCategoryAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
