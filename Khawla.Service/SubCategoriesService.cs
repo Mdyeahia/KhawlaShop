@@ -34,6 +34,12 @@ namespace Khawla.Service
             KhawlaDbContext context = new KhawlaDbContext();
             return context.SubCategories.Include(m=>m.Category).ToList();
         }
+        public List<SubCategory> GetSubCategoryByCategoryId(int Id)
+        {
+            KhawlaDbContext context = new KhawlaDbContext();
+            
+            return context.SubCategories.Where(t => t.CategoryID == Id).ToList();
+        }
         public List<SubCategory> FilterSubCategories(string searchTerm, int pageNo, int pageSize)
         {
             KhawlaDbContext context = new KhawlaDbContext();

@@ -85,5 +85,11 @@ namespace Khawla.Web.Controllers
 
             return RedirectToAction("SubCategoryList");
         }
+
+        public JsonResult SubcategoryByCategoryId(int? CategoryId)
+        {
+            var subcategories = SubCategoriesService.Instance.GetSubCategoryByCategoryId((int)CategoryId);
+            return Json(subcategories, JsonRequestBehavior.AllowGet);
+        }
     }
 }

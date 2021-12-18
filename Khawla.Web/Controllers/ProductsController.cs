@@ -39,6 +39,7 @@ namespace Khawla.Web.Controllers
         {
             ProductsCreateViewModel model = new ProductsCreateViewModel();
             model.Categories = CategoriesService.Instance.allCategory();
+            model.SubCategories = SubCategoriesService.Instance.allSubCategory();
             return PartialView(model);
         }
         [HttpPost]
@@ -55,6 +56,7 @@ namespace Khawla.Web.Controllers
                 newProduct.Price = model.Price;
                 newProduct.Quantity = model.Quantity;
                 newProduct.CategoryId = model.CategoryId;
+                newProduct.SubCategoryId = model.SubCategoryId;
 
                 if (!string.IsNullOrEmpty(model.ProductPictures))
                 {

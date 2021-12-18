@@ -20,6 +20,8 @@ namespace Khawla.Web.ViewModels
         public List<ProductPicture> ProductPictureList { get; set; }
         public string ProductPictures { get; set; }
         public List<Category> Categories { get; set; }
+        public int SubCategoryId { get; set; }
+        public List<SubCategory> SubCategories { get; set; }
         public int Id { get; set; }
         public Product Product { get; set; }
     }

@@ -13,12 +13,21 @@
 
         <div class="form-group">
             <label for="">Category</label>
-            <select class="form-group" name="CategoryId">
+            <select class="form-group"id="categoryId" name="CategoryId">
+                <option value="">Select Category</option>
                 @foreach (var category in Model.Categories)
                 {
                     <option value="@category.ID">@category.Name</option>
                 }
             </select>
+        </div>
+        <div class="form-group">
+            <label for="">Sub-Category</label>
+            <div class="col-md-10">
+                <select class="form-control" id="subcategoryId" name="subcategoryId">
+                    <option>Select Sub-Category</option>
+                </select>
+            </div>
         </div>
         <div class="form-group">
             <label for="Summery">Summery</label>
@@ -52,13 +61,36 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button id="cancelBtn" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="cancelBtn" class="btn btn-warning" data-dismiss="modal">Cancel</button>
         <button id="ProductSaveBtn" type="button" class="btn btn-primary">Save changes</button>
     </div>
 </form>
 
 <script>
-   
+    
+    $("#categoryId").change(function () {
+             var categoryId = $("#categoryId").val();
+            $("#subcategoryId").empty();
+            $("#subcategoryId").append('<option>--Select Sub-Category--</option>');
+           
+            $.ajax({
+                type: "Get",
+                url: '@Url.Action("SubcategoryByCategoryId", "SubCategories")',
+                contentType: "application/json; charset=utf-8",
+                data: { CategoryId: categoryId },
+                dataType: "json",
+                success: function (data) {
+                    
+                    $.each(data, function (key, value) {
+
+                        $("#subcategoryId").append('<option value=' + value.Id + '>' + value.SubCategoryName + '</option>');
+                    });
+                },
+            });
+        });
+    
+
+
     $("#CreateTable").validate({
         rules: {
             Name: {

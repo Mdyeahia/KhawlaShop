@@ -59,7 +59,7 @@ namespace Khawla.Service
         {
             var context = new KhawlaDbContext();
 
-            var product = context.Products.Include(a =>a.Category).Include("ProductPictures.Picture").AsQueryable();
+            var product = context.Products.Include(a =>a.Category).Include(a => a.SubCategory).Include("ProductPictures.Picture").AsQueryable();
             if (categoryId.HasValue && categoryId.Value > 0)
             {
                 product = product.Where(x => x.CategoryId == categoryId.Value);
@@ -77,7 +77,7 @@ namespace Khawla.Service
         {
             var context = new KhawlaDbContext();
 
-            var product = context.Products.Include(a => a.Category).Include("ProductPictures.Picture").AsQueryable();
+            var product = context.Products.Include(a => a.Category).Include(a => a.SubCategory).Include("ProductPictures.Picture").AsQueryable();
             
             if (!string.IsNullOrEmpty(searchTerm))
             {
@@ -93,6 +93,7 @@ namespace Khawla.Service
             using (var context = new KhawlaDbContext())
             {
                 var products = context.Products.Include(p => p.Category)
+                    .Include(a => a.SubCategory)
                 .Include(p => p.ProductPictures)
                 .Include("ProductPictures.Picture").ToList();
                 if (!string.IsNullOrEmpty(searchTerm))

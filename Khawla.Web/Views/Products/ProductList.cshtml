@@ -41,7 +41,7 @@
                         <input type="text" id="searchTxt" name="search" class="form-control mr-1" placeholder="Search by Name..." value="@Model.SearchTerm">
                         <div class="input-group-append link-danger" id="button-addon4">
                             <button id="searchBtn" class="btn btn-primary mr-1" type="button">Search</button>
-                            <button id="resetBtn" class="btn btn-secondary mr-1" type="button">Reset</button>
+                            <button id="resetBtn" class="btn btn-warning mr-1" type="button">Reset</button>
                             <button id="CreateProductBtn" class="action-btn btn btn-success mr-1" type="button">Create New Product</button>
                         </div>
                     </div>
@@ -58,13 +58,15 @@
 
                         <td>Summery</td>
 
-                        
+
 
                         <td>Quantity</td>
 
                         <td>Price</td>
 
                         <td>Category</td>
+
+                        <td>Sub-Category</td>
 
                         <td>Actions</td>
                     </tr>
@@ -75,28 +77,40 @@
                     {
                         foreach (var product in Model.AllProduct)
                         {
-                            <tr>
-                                <td>@product.Name</td>
+                    <tr>
+                        <td>@product.Name</td>
 
-                                <td>@product.Summery</td>
-
-                                
-
-                                <td>@product.Quantity</td>
-
-                                <td>@product.Price</td>
-
-                                <td>@product.Category.Name</td>
-
-                                <td>
-                                    <button type="button" class="DeleteBtn btn btn-danger" data-id="@product.ID">Delete</button>
+                        <td>@product.Summery</td>
 
 
-                                    <button type="button" class="EditBtn btn btn-primary" data-id="@product.ID" data-toggle="modal" data-target="FormModel">Edit</button>
-                                </td>
+
+                        <td>@product.Quantity</td>
+
+                        <td>@product.Price</td>
+
+                        <td>@product.Category.Name</td>
+                        <td>
+                            @if (product.SubCategory != null)
+                            {
+                                @product.SubCategory.SubCategoryName
 
 
-                            </tr>
+                            }
+                            else
+                            {
+                            <h5>not in sub Categfory</h5>
+                             }
+
+                        </td>
+                        <td>
+                            <button type="button" class="DeleteBtn btn btn-danger" data-id="@product.ID">Delete</button>
+
+
+                            <button type="button" class="EditBtn btn btn-primary" data-id="@product.ID" data-toggle="modal" data-target="FormModel">Edit</button>
+                        </td>
+
+
+                    </tr>
                         }
 
                     }
