@@ -88,7 +88,7 @@ namespace Khawla.Service
             return product.OrderByDescending(a => a.ID).Skip(skipCount).Take(pageSize).ToList();
 
         }
-        public List<Product> SearchProducts(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryId, int? sortBy, int pageNo, int pageSize)
+        public List<Product> SearchProducts(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryId,int? subcategoryID, int? sortBy, int pageNo, int pageSize)
         {
             using (var context = new KhawlaDbContext())
             {
@@ -115,6 +115,10 @@ namespace Khawla.Service
                 {
                     products = products.Where(p => p.Category.ID == categoryId.Value).ToList();
                 }
+                if (subcategoryID.HasValue)
+                {
+                    products = products.Where(p => p.SubCategoryId == subcategoryID.Value).ToList();
+                }
 
                 if (sortBy.HasValue)
                 {
@@ -136,7 +140,7 @@ namespace Khawla.Service
                 return products.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
             }
         }
-        public int SearchProductsCount(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryId,
+        public int SearchProductsCount(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryId, int? subcategoryID,
           int? sortBy)
         {
             using (var context = new KhawlaDbContext())
@@ -161,7 +165,10 @@ namespace Khawla.Service
                 {
                     products = products.Where(p => p.Category.ID == categoryId.Value).ToList();
                 }
-
+                if (subcategoryID.HasValue)
+                {
+                    products = products.Where(p => p.SubCategoryId == subcategoryID.Value).ToList();
+                }
                 if (sortBy.HasValue)
                 {
                     switch (sortBy.Value)
@@ -191,6 +198,7 @@ namespace Khawla.Service
             {
                 product = product.Where(x => x.CategoryId == categoryId.Value);
             }
+           
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 product = product.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));

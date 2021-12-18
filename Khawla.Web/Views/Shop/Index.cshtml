@@ -115,6 +115,7 @@
         </div>
     </div>
 </section>
+<input type="hidden" id="SubCategoryID" value="@Model.SubCategoryID" />
 <!-- Product Section End -->
 <script>
 
@@ -125,6 +126,7 @@
     });
     $(".categorysidebar a").click(function (e) {
         $("#searchTxt").val('');
+        $("#SubCategoryID").val('');
         resetSlider();
 
     });
@@ -137,7 +139,8 @@
 
                 sortBy: $(".ShopSortselect").val(),
                 categoryID: $("#CategoryID").val(),
-                searchTerm: $("#searchTxt").val()
+                subcategoryID: $("#SubCategoryID").val(),
+                searchTerm: $("#searchTxt").val(),
             },
             beforeSend: function () {
                 $("#productsDiv").hide();
@@ -217,8 +220,10 @@
                     searchTerm: $("#SearchTerm").val(),
                     sortBy: $("#SortBy").val(),
                     categoryID: $("#CategoryID").val(),
+                    subcategoryID: $("#SubCategoryID").val(),
                     minimumPrice: rangeSlider.slider("values", 0),
-                    maximumPrice: rangeSlider.slider("values", 1)
+                    maximumPrice: rangeSlider.slider("values", 1),
+                   
                 }
             })
             .done(function (response) {

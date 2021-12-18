@@ -13,6 +13,7 @@
 </div>
 <script>
     $("#searchBtn").click(function () {
+        $("#SubCategoryID").val('');
         $.ajax({
             type:'get',
             url: '@Url.Action("FilterProducts", "Shop")',

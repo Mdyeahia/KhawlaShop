@@ -134,6 +134,11 @@ ol {
 	margin: 0 auto;
 }
 
+
+
+
+
+
 .set-bg {
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -567,6 +572,56 @@ ol {
 .hero.hero-normal {
 	padding-bottom: 30px;
 }
+/*<--category menu-start->*/
+
+/*.menu li a:hover, .menu li:hover > a {
+	color: azure;
+	background: #7fad39;
+}*/
+.hero__categories .menu ul li a:hover, .menu ul li:hover > a {
+	background: #7fad39;
+	color: #fff;
+}
+
+.hero__categories .menu li:hover > ul {
+	visibility: visible;
+	opacity: 1;
+	transform: translate(0,0);
+	border: 1px solid #ebebeb;
+}
+
+.hero__categories .menu ul {
+	visibility: hidden;
+	opacity: 0;
+	margin: 0;
+	padding: 0;
+	width: 100px;
+	position: absolute;
+	right: 0px;
+	background: #fff;
+	z-index: 99;
+	transform: translate(0,20px);
+	transition: all 0.2s ease-out;
+}
+
+	.hero__categories .menu ul:after {
+		bottom: 100%;
+		right: 20%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+		border-color: rgba(255, 255, 255, 0);
+		border-bottom-color: #fff;
+		border-width: 6px;
+		margin-left: -6px;
+	}
+
+
+
+/*<--category menu end-->*/
 
 .hero.hero-normal .hero__categories {
 	position: relative;
@@ -615,13 +670,18 @@ ol {
 	color: #ffffff;
 }
 
-.hero__categories ul {
+.hero__categories .menu {
 	border: 1px solid #ebebeb;
 	padding-left: 40px;
 	padding-top: 10px;
 	padding-bottom: 12px;
 }
-
+.hero__categories .sub-menu {
+	border: 1px solid #ebebeb;
+	padding-left: 0;
+	padding-top: 10px;
+	padding-bottom: 12px;
+}
 .hero__categories ul li {
 	list-style: none;
 }

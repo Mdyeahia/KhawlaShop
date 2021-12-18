@@ -8,14 +8,48 @@
                 <i class="fa fa-bars"></i>
                 <span class="categoryDrop">All departments</span>
             </div>
-            <ul>
+            <ul class="menu">
                 @foreach (var category in Model.AllCategory)
-                {
-                    <li><a href="@Url.Action("Index", "Shop", new {categoryID=category.ID})">@category.Name</a></li>
-                }
+                { 
+                <li>
+                    <a href="@Url.Action("Index", "Shop", new {categoryID=category.ID})">@category.Name</a>
+                    <ul class="sub-menu">
+                        @if (category.SubCategories != null && category.SubCategories.Count > 0)
+                        {
+                        foreach (var subcategory in category.SubCategories)
+                        {
+                            <li>
 
+                                <a href="@Url.Action("Index", "Shop", new { subcategoryID = subcategory.Id })">@subcategory.SubCategoryName</a>
+
+                            </li>
+                        }
+                        }
+
+                    </ul>
+                </li>
+                }
+            
 
             </ul>
         </div>
     </div>
 }
+
+@*@foreach (var category in Model.AllCategory)
+{
+    <li>
+        <a href="@Url.Action("Index", "Shop", new {categoryID=category.ID})">@category.Name</a>
+
+        <ul class="category_right_sliding">
+            @foreach (var subcategory in category.SubCategories)
+            {
+                <li>
+
+                    <a href="@Url.Action("Index", "Shop", new {subcategoryID=subcategory.Id})">@subcategory.SubCategoryName</a>
+
+                </li>
+            }
+        </ul>
+    </li>
+}*@
