@@ -232,7 +232,31 @@
         }
         $button.parent().find('input').val(newVal);
     });
-   
+
+
+    var products;
+    $(".productAddToCart").click(function () {
+        var existingCookieData = $.cookie('CartProducts');
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+            products = existingCookieData.split('-');
+        }
+        else {
+            products = [];
+        }
+        var productID = $(this).attr('data-id');
+        products.push(productID);
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        updateCartProducts();
+
+        swal.fire({
+            title: "Done!",
+            text: "Product added to cart",
+            timer: 1000,
+            showConfirmButton: false
+        });
+    });
+
     $(function () {
         updateCartProducts()
     });
