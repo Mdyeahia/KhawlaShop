@@ -37,6 +37,13 @@ namespace Khawla.Service
             return context.Products.Include(a => a.ProductPictures).Include("ProductPictures.Picture").Where(a => a.ID == Id).First();
 
         }
+        public List<Product> GetProducts(List<int> Ids)
+        {
+            using(var context=new KhawlaDbContext())
+            {
+                return context.Products.Where(x => Ids.Contains(x.ID)).Include(a => a.ProductPictures).Include("ProductPictures.Picture").ToList();
+            }
+        }
         public List<Product> AllProduct()
         {
             var context = new KhawlaDbContext();

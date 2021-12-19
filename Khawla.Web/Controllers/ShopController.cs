@@ -55,5 +55,20 @@ namespace Khawla.Web.Controllers
 
             return PartialView(model);
         }
+
+        public ActionResult ShopingCart()
+        {
+            CheckoutViewModel model = new CheckoutViewModel();
+
+            var CardProductsCookie = Request.Cookies["CartProducts"];
+            if(CardProductsCookie!=null&& !string.IsNullOrEmpty(CardProductsCookie.Value))
+            {
+                model.CartProductIDs = CardProductsCookie.Value
+                    .Split('-').Select(x => int.Parse(x)).ToList();
+                model.CartProducts = ProductsService.Instance.GetProducts(model.CartProductIDs);
+
+            }
+            return View(model);
+        }
     }
 }
