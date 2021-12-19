@@ -60,11 +60,11 @@
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
-                                    <input type="number" value="1" min="1" max="@Model.Product.Quantity">
+                                    <input type="number" value="1" min="1" max="@Model.Product.Quantity" disabled>
                                 </div>
                             </div>
                         </div>
-                        <a href="#" class="primary-btn">ADD TO CARD</a>
+                        <a href="#" data-id="@Model.Product.ID" class="productAddToCart primary-btn">ADD TO CARD</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
                             <li>
@@ -164,3 +164,30 @@
         </div>
     </section>
 }
+<script>
+   
+    var products;
+    $(".productAddToCart").click(function () {
+        var existingCookieData = $.cookie('CartProducts');
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null)
+        {
+            products = existingCookieData.split('-');
+        }
+        else
+        {
+            products = [];
+        }
+        var productID = $(this).attr('data-id');
+        products.push(productID);
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        updateCartProducts();
+
+        swal.fire({
+            title: "Done!",
+            text: "Product added to cart",
+            timer: 1000,
+            showConfirmButton: false
+        });
+    });
+</script> 
