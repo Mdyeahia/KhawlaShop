@@ -131,7 +131,7 @@
 
     });
     $(".ShopSortselect").change(function() {
-
+        resetSlider();
         $.ajax({
 
             url: '@Url.Action("FilterProducts", "Shop")',
@@ -149,7 +149,8 @@
 
         })
             .done(function (response) {
-
+                @*$("#minamount").val('@Model.MinimumPrice');
+                 $("#maxamount").val('@Model.MaximumPrice');*@
                 $("#productsDiv").html(response);
                 $("#productsDiv").delay(500).fadeIn('slow');
 
@@ -223,7 +224,7 @@
                     subcategoryID: $("#SubCategoryID").val(),
                     minimumPrice: rangeSlider.slider("values", 0),
                     maximumPrice: rangeSlider.slider("values", 1),
-                   
+
                 }
             })
             .done(function (response) {
@@ -233,11 +234,14 @@
                 alert("FAIL");
             });
     }
-    function resetSlider() {
-        var $slider = $(".price-range");
-        $slider.slider("values", 0, @Model.MinimumPrice);
-        $slider.slider("values", 1, @Model.MaximumPrice);
-        $("#minamount").val('@Model.MinimumPrice');
-        $("#maxamount").val('@Model.MaximumPrice');
-    }
+   /*-------------------
+       slide on product query
+   ---------------------    */
+      function resetSlider() {
+          var $slider = $(".price-range");
+          $slider.slider("values", 0, @Model.MinimumPrice);
+          $slider.slider("values", 1, @Model.MaximumPrice);
+          $("#minamount").val('@Model.MinimumPrice');
+          $("#maxamount").val('@Model.MaximumPrice');
+      }
 </script>

@@ -686,12 +686,13 @@ ol {
 	list-style: none;
 }
 
-.hero__categories ul li a {
-	font-size: 16px;
-	color: #1c1c1c;
-	line-height: 39px;
-	display: block;
-}
+	.hero__categories ul li a {
+		font-size: 16px;
+		color: #1c1c1c;
+		line-height: 39px;
+		display: block;
+		text-align: center;
+	}
 
 .hero__search {
 	overflow: hidden;

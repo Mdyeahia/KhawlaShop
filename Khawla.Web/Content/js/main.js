@@ -264,9 +264,35 @@
             showConfirmButton: false
         });
     });
+    var oldproducts;
+    $(".ShopcartProductQty .inc").click(function () {
+        
+        var oldCookieData = $.cookie('CartProducts');
+     
+        
+        if (oldCookieData != undefined && oldCookieData != "" && oldCookieData != null) {
+            oldproducts = oldCookieData.split('-');
+        }
+        else {
+            oldproducts = [];
+        }
+        var productID = $(this).find('data-id').val();
+       
+            oldproducts.push(productID);
+
+        debugger
+        $.cookie('CartProducts', oldproducts.join('-'), { path: '/' });
+
+
+        updateCartProducts();
+
+        location.reload();
+    });
+  
 
     $(function () {
-        updateCartProducts()
+        updateCartProducts();
+        resetSlider();
     });
 })(jQuery);
 
@@ -276,7 +302,7 @@
 function updateCartProducts() {
     var cartProducts;
     var existingCookieData = $.cookie('CartProducts');
-
+   
     if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
         cartProducts = existingCookieData.split('-');
     }
