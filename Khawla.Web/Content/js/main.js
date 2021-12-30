@@ -234,6 +234,33 @@
     });
 
 
+    var shopQty = $('.ShopcartProductQty');
+    shopQty.prepend('<span class="Shopcartdec">-</span>');
+    shopQty.append('<span class="Shopcartinc qtybtn">+</span>');
+    shopQty.on('click', '.qtybtn', function () {
+        var $button = $(this);
+        var maxvalue = parseFloat($button.parent().find('input').attr('max'));
+        var oldValue = parseFloat($button.parent().find('input').val());
+        if ($button.hasClass('inc')) {
+            if (oldValue < maxvalue) { var newVal = parseFloat(oldValue) + 1; }
+
+            else {
+                if (oldValue == maxvalue) { var newVal = maxvalue; }
+
+            }
+        }
+
+        else {
+            // Don't allow decrementing below zero
+            if (oldValue > 1) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 1;
+            }
+        }
+        $button.parent().find('input').val(newVal);
+    });
+
     var products;
     $(".productAddToCart").click(function () {
         var existingCookieData = $.cookie('CartProducts');
@@ -265,7 +292,7 @@
         });
     });
     var oldproducts;
-    $(".ShopcartProductQty .inc").click(function () {
+    $(".Shopcartinc").click(function () {
         
         var oldCookieData = $.cookie('CartProducts');
      
@@ -276,11 +303,11 @@
         else {
             oldproducts = [];
         }
-        var productID = $(this).find('data-id').val();
+        var productID = $(this).parents('div').attr('data-id');
        
             oldproducts.push(productID);
 
-        debugger
+        
         $.cookie('CartProducts', oldproducts.join('-'), { path: '/' });
 
 
