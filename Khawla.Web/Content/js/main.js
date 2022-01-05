@@ -262,7 +262,7 @@
     });
 
     var products;
-    $(".productAddToCart").click(function () {
+    $(document).on('click',".productAddToCart",function () {
         var existingCookieData = $.cookie('CartProducts');
         var proQuantity = $('.pro-qty').find('input').val();
        
@@ -281,7 +281,7 @@
         }
         
         $.cookie('CartProducts', products.join('-'), { path: '/' });
-
+        
         updateCartProducts();
        
         swal.fire({
@@ -291,6 +291,7 @@
             showConfirmButton: false
         });
     });
+   
     var incProducts;
     $(".Shopcartinc").click(function () {
         
