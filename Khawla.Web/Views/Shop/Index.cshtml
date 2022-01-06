@@ -37,7 +37,7 @@
                         <ul>
                             @foreach (var category in Model.AllCategory)
                             {
-                                <li><a href="@Url.Action("FilterProducts", "Shop", new {categoryID=category.ID})">@category.Name</a></li>
+                                <li><a href="@Url.Action("Index", "Shop", new {categoryID=category.ID})">@category.Name</a></li>
                             }
 
 
@@ -118,13 +118,18 @@
 <input type="hidden" id="SubCategoryID" value="@Model.SubCategoryID" />
 <!-- Product Section End -->
 <script>
-
-    $(".sidebar__item a").click(function (e) {
-        e.preventDefault();
-        $('#productsDiv').hide();
-        $('#productsDiv').load($(this).attr("href")).delay(500).fadeIn('slow');
+    $(document).ready(function () {
+        // Handler for .ready() called.
+        $('html, body').animate({
+            scrollTop: $('.TotalproductDiv').offset().top
+        }, 'slow');
     });
-    $(".categorysidebar a").click(function (e) {
+    //$(".sidebar__item a").click(function (e) {
+    //    e.preventDefault();
+    //    $('#productsDiv').hide();
+    //    $('#productsDiv').load($(this).attr("href")).delay(500).fadeIn('slow');
+    ////});
+    $(".categorysidebar a").click(function () {
         $("#searchTxt").val('');
         $("#SubCategoryID").val('');
         resetSlider();
@@ -218,7 +223,7 @@
         $.ajax({
                 url: '@Url.Action("FilterProducts", "Shop")',
                 data: {
-                    searchTerm: $("#SearchTerm").val(),
+                    searchTerm: $("#searchTxt").val(),
                     sortBy: $("#SortBy").val(),
                     categoryID: $("#CategoryID").val(),
                     subcategoryID: $("#SubCategoryID").val(),
@@ -237,11 +242,11 @@
    /*-------------------
        slide on product query
    ---------------------    */
-      function resetSlider() {
+      @*function resetSlider() {
           var $slider = $(".price-range");
           $slider.slider("values", 0, @Model.MinimumPrice);
           $slider.slider("values", 1, @Model.MaximumPrice);
           $("#minamount").val('@Model.MinimumPrice');
           $("#maxamount").val('@Model.MaximumPrice');
-      }
+      }*@
 </script>

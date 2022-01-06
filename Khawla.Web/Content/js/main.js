@@ -343,13 +343,19 @@
 
         location.reload();
     });
-  
+
+    $("#searchBtn").click(function () {
+        $("#SubCategoryID").val('');
+        resetSlider();
+       
+    })
 
     $(function () {
         updateCartProducts();
         resetSlider();
     });
 })(jQuery);
+
 
 /*-------------------
        Product Added to Card
@@ -367,3 +373,16 @@ function updateCartProducts() {
 
     $("#cartProductsCount").html(cartProducts.length);
 };
+
+/*-------------------
+      slide on product query
+  ---------------------    */
+function resetSlider() {
+    var minimumPrice = $("#minamount").val();
+    var maximumPrice = $("#maxamount").val();
+    var $slider = $(".price-range");
+    $slider.slider("values", 0, minimumPrice);
+    $slider.slider("values", 1, maximumPrice);
+    $("#minamount").val(minimumPrice);
+    $("#maxamount").val(maximumPrice);
+}

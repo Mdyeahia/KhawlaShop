@@ -8,10 +8,11 @@
             <span class="arrow_carrot-down"></span>
         </div>
         <input type="text"id="searchTxt" name="search" placeholder="What do yo u need?"value="@Model.SearchTerm">
-        <button type="button"id="searchBtn" class="site-btn">SEARCH</button>
+        <button  type="button"id="searchBtn"onclick='javascript: window.open("/Shop?searchTerm=" + document.getElementById("searchTxt").value,"_self");' class="site-btn">SEARCH</button>
     </form>
 </div>
-<script>
+
+@*<script>
     $("#searchBtn").click(function () {
         $("#SubCategoryID").val('');
         $.ajax({
@@ -36,4 +37,4 @@
                 alert("FAIL");
             });
     });
-</script>
+</script>*@
