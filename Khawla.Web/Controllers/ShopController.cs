@@ -13,7 +13,7 @@ namespace Khawla.Web.Controllers
         // GET: Shop
         public ActionResult Index(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryID, int? subcategoryID, int? sortBy, int? pageNo)
         {
-            var pageSize = 12;
+            var pageSize = 4;
             pageNo = pageNo ?? 1;
 
             ShopViewModel model = new ShopViewModel();
@@ -31,14 +31,14 @@ namespace Khawla.Web.Controllers
             model.SortBy = sortBy;
             model.Products = ProductsService.Instance.SearchProducts(searchTerm, maximumPrice, minimumPrice, categoryID, subcategoryID, sortBy, pageNo.Value, pageSize);
             
-            int totalCount = ProductsService.Instance.SearchProductsCount(searchTerm, maximumPrice, minimumPrice, categoryID, subcategoryID, sortBy);
-            model.Pager = new Pager(totalCount, pageNo, pageSize);
+            model.totalCount = ProductsService.Instance.SearchProductsCount(searchTerm, maximumPrice, minimumPrice, categoryID, subcategoryID, sortBy);
+            model.Pager = new Pager(model.totalCount, pageNo, pageSize);
 
             return View(model);
         }
         public ActionResult FilterProducts(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryID,int? subcategoryID, int? sortBy, int? pageNo)
         {
-            var pageSize = 12;
+            var pageSize = 4;
             pageNo = pageNo ?? 1;
 
             FilterProductsViewModel model = new FilterProductsViewModel();

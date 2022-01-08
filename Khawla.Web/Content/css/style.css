@@ -1696,7 +1696,9 @@ ol {
 	color: #252525;
 	font-weight: 700;
 }
-
+.pageDataLink.active {
+	background-color: #7fad39;
+}
 .product__pagination,
 .blog__pagination {
 	padding-top: 10px;
@@ -1721,12 +1723,13 @@ ol {
 	transition: all, 0.3s;
 }
 
-.product__pagination a:hover,
-.blog__pagination a:hover {
-	background: #7fad39;
-	border-color: #7fad39;
-	color: #ffffff;
-}
+	.product__pagination a.active,
+	.blog__pagination a:hover {
+		background: #7fad39;
+		border-color: #7fad39;
+		color: #ffffff;
+		pointer-events: none;
+	}
 
 .product__pagination a:last-child,
 .blog__pagination a:last-child {

@@ -5,6 +5,8 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var searchinput = Model.SearchTerm != null ? Model.SearchTerm : string.Empty;
 }
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <!-- Breadcrumb Section Begin -->
@@ -83,7 +85,9 @@
                         </div>
                         <div class="col-lg-4 col-md-4">
                             <div class="filter__found">
-                                <h6><span>@Model.Products.Count()</span>Products found</h6>
+                                @if(Model.SearchTerm!=null)
+                                {<h6><span>@Model.totalCount </span>Products found for "@searchinput"</h6> }
+                                else { <h6><span>@Model.totalCount </span>Products found</h6>}
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-3">
@@ -189,15 +193,10 @@
     });
 
 
-    $(".dataLink").click(function () {
-        var url = $(this).attr("data-href");
-        if (url != "" || url != undefined) {
-            GetData(url);
-        }
-    });
+   
     function GetData(dUrl){
         console.log("getdata in");
-       /* showLoader();*/
+        showLoader();
         $.ajax({
                 url: dUrl,
                 data: {
@@ -215,7 +214,7 @@
             })
             .always(function(){
                 console.log("always");
-              /*  hideLoader();*/
+                hideLoader();
             });
         console.log("getdata out");
     }
