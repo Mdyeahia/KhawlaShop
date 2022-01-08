@@ -14,23 +14,14 @@
     /*------------------
         Preloader
     --------------------*/
-    $(window).on('load', function () {
-        $(".loader").fadeOut();
-        $("#preloder").delay(15).fadeOut("slow");
+    var removePreloader = function () {
+        $(window).on("load", function () {
+            $(".loader").fadeOut();
+            $("#preloder").delay(500).fadeOut('slow');
 
-        /*------------------
-            Gallery filter
-        --------------------*/
-        //$('.featured__controls li').on('click', function () {
-        //    $('.featured__controls li').removeClass('active');
-        //    $(this).addClass('active');
-        //});
-        //if ($('.featured__filter').length > 0) {
-        //    var containerEl = document.querySelector('.featured__filter');
-        //    var mixer = mixitup(containerEl);
-        //}
-       
-    });
+        });
+    };
+    
     
     /*------------------
         Background Set
@@ -201,6 +192,23 @@
             });
         }
     });
+    /*------------------
+        goto top
+    --------------------*/
+    var goTop = function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 800) {
+                $('.go-top').addClass('show');
+            } else {
+                $('.go-top').removeClass('show');
+            }
+        });
+
+        $('.go-top').on('click', function () {
+            $("html, body").animate({ scrollTop: 0 }, 1000, 'easeInOutExpo');
+            return false;
+        });
+    };
 
     /*-------------------
         Quantity change
@@ -353,6 +361,8 @@
     $(function () {
         updateCartProducts();
         resetSlider();
+        removePreloader();
+        goTop();
     });
 })(jQuery);
 
@@ -386,3 +396,11 @@ function resetSlider() {
     $("#minamount").val(minimumPrice);
     $("#maxamount").val(maximumPrice);
 }
+function hideLoader() {
+    $(".loader").hide();
+    $("#preloder").hide('slow');
+};
+function showLoader() {
+    $(".loader").show();
+    $("#preloder").show();
+};

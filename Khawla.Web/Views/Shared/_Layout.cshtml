@@ -50,7 +50,7 @@
         </div>
         <div class="humberger__menu__widget">
             <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
+                <a href="@Url.Action("Login","Account")"><i class="fa fa-user"></i> Login</a>
             </div>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
@@ -123,7 +123,7 @@
                         </ul>
                         <div class="header__cart__price">item: <span>$150.00</span></div>
                         <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
+                            <a href="@Url.Action("Login","Account")" data-toggle="modal" data-target="#myModal"><i class="fa fa-user"></i> Login</a>
                         </div>
                     </div>
                 </div>
@@ -230,7 +230,12 @@
                 </div>
             </div>
         </div>
+
     </footer>
+    <!-- Go Top -->
+    <a class="go-top">
+        <i class="fa fa-chevron-up"></i>
+    </a>
     <!-- Footer Section End -->
     <!-- Js Plugins -->
 
