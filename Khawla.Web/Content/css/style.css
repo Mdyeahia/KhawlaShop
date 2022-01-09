@@ -190,7 +190,7 @@ ol {
 /* Preloader
 ---------------------------------------------------------------*/
 
-#preloader {
+.preloader{
 	position: fixed;
 	z-index: 999999;
 	top: 0;
