@@ -202,6 +202,7 @@
     <Content Include="Content\css\FeatureProduct.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\jquery-ui.min.css" />
+    <Content Include="Content\css\LogRegistration.css" />
     <Content Include="Content\css\nice-select.css" />
     <Content Include="Content\css\owl.carousel.min.css" />
     <Content Include="Content\css\slicknav.min.css" />
@@ -360,6 +361,7 @@
     <Content Include="Views\SubCategories\Index.cshtml" />
     <Content Include="Views\SubCategories\Create.cshtml" />
     <Content Include="Views\Shop\ShopingCart.cshtml" />
+    <Content Include="Views\Account\LogRegPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

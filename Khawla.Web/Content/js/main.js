@@ -16,13 +16,13 @@
     --------------------*/
     var removePreloader = function () {
         $(window).on("load", function () {
-            $(".loader").fadeOut();
-            $("#preloder").delay(500).fadeOut('slow');
-
+        
+            $("#preloader").delay(1500).fadeOut('slow', function () {
+                $(this).remove();
+            });
         });
     };
-    
-    
+   
     /*------------------
         Background Set
     --------------------*/
@@ -398,9 +398,9 @@ function resetSlider() {
 }
 function hideLoader() {
     $(".loader").hide();
-    $("#preloder").hide('slow');
+    $("#preloader").hide('slow');
 };
 function showLoader() {
     $(".loader").show();
-    $("#preloder").show();
+    $("#preloader").show();
 };

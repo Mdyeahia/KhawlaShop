@@ -31,8 +31,12 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
 </head>
 <body>
-    <div id="preloder">
-        <div class="loader"></div>
+    <div id="preloader">
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
 
     <!-- Humberger Begin -->
@@ -123,7 +127,7 @@
                         </ul>
                         <div class="header__cart__price">item: <span>$150.00</span></div>
                         <div class="header__top__right__auth">
-                            <a href="@Url.Action("Login","Account")" data-toggle="modal" data-target="#myModal"><i class="fa fa-user"></i> Login</a>
+                            <a href="@Url.Action("Login","Account")"><i class="fa fa-user"></i> Login</a>
                         </div>
                     </div>
                 </div>
