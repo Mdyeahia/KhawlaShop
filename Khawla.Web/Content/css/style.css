@@ -98,7 +98,7 @@ a:hover,
 a:focus {
 	text-decoration: none;
 	outline: none;
-	color: #ffffff;
+	color: #e5784e;
 }
 
 ul,
@@ -651,7 +651,7 @@ ol {
 -----------------------*/
 
 .hero {
-	padding-bottom: 50px;
+	padding-bottom: 10px;
 }
 
 .hero.hero-normal {
@@ -760,6 +760,11 @@ ol {
 	padding-left: 40px;
 	padding-top: 10px;
 	padding-bottom: 12px;
+	transform: none;
+	visibility: visible;
+	position: absolute;
+	background-color: white;
+	width: 90%;
 }
 .hero__categories .sub-menu {
 	border: 1px solid #ebebeb;

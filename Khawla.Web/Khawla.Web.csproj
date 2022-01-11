@@ -246,6 +246,7 @@
     <Content Include="Content\img\latest-product\lp-2.jpg" />
     <Content Include="Content\img\latest-product\lp-3.jpg" />
     <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\pagelogoo.png" />
     <Content Include="Content\img\payment-item.png" />
     <Content Include="Content\img\product\details\product-details-1.jpg" />
     <Content Include="Content\img\product\details\product-details-2.jpg" />
@@ -361,7 +362,6 @@
     <Content Include="Views\SubCategories\Index.cshtml" />
     <Content Include="Views\SubCategories\Create.cshtml" />
     <Content Include="Views\Shop\ShopingCart.cshtml" />
-    <Content Include="Views\Account\LogRegPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

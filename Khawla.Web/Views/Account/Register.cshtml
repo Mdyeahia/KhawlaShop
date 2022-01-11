@@ -2,40 +2,77 @@
 @{
     ViewBag.Title = "Register";
 }
+<link href="~/Content/css/LogRegistration.css" rel="stylesheet" />
+<div class="login">
+    <div class="logcontainer">
+        <div class="row" id="loginrow">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="logo" style="color:black">Register to Khawla!</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="registerlogo">
+                            Already a member?
+                            <a href="@Url.Action("Login","Account")">Login</a> here
+                        </span>
+                    </div>
 
-<h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <a href="#" class="google btn">
+                                    <i class="fa fa-google fa-fw">
+                                    </i> Login with Google+
+                                </a><br /><br>
+                                <a href="#" class="fb btn">
+                                    <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+                                </a><br /><br>
+                                <p><a>Continue With Email</a>. By signing up you indicate that you have read and agree to the,<a> Terms of Service</a> and <a>Privacy Policy</a>.</p>
+                            </div>
+                            <div class="col-md-7" style="border-left:1px solid #ccc;height:220px">
+                                <form class="">
+                                    <fieldset>
+                                        <div class="form-group ">
+                                            <input id="textinput" name="username" type="text" placeholder="Enter userName" class="form-control ">
+                                        </div>
+                                        <div class="form-group ">
+                                            <input id="textinput" name="email" type="email" placeholder="Enter Email" class="form-control ">
+                                        </div>
+                                        <div class="form-group ">
+                                            <input id="textinput" name="password" type="password" placeholder="Enter Password" class="form-control ">
+                                        </div>
+                                        <div class="form-group ">
+                                            <input id="textinput" name="confirmpassword" type="password" placeholder="Confirm Password" class="form-control ">
+                                        </div>
+                                        <div class="spacing"><input type="checkbox" name="checkboxes" id="checkboxes-0" value="1"><small> Remember me</small></div>
+                                        <div class="spacing"><a href="#"><small> Forgot Password?</small></a><br /></div>
+                                        <button type="submit" id="singlebutton" value="Log in" name="singlebutton" class="btn-primary  btn-sm reg-pull-right">Sign Up</button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+            </div>
+        </div>
+    </div>
+</div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    <script>
+        $(document).ready(function () {
+            // Handler for .ready() called.
+            $('.menu').hide();
+            $('.sub-menu').hide();
+            $('html, body').animate({
+                scrollTop: $('.logcontainer').offset().top
+            }, 'slow');
+
+        });
+    </script>
