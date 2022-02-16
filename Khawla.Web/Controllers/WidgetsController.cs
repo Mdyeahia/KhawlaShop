@@ -47,7 +47,7 @@ namespace Khawla.Web.Controllers
 
             return PartialView(model);
         }
-        [HttpGet]
+       
         [ChildActionOnly]
         public ActionResult CategoryDropDownWidget()
         {
@@ -55,7 +55,7 @@ namespace Khawla.Web.Controllers
             model.AllCategory = CategoriesService.Instance.allCategory();
             return PartialView("~/Views/Widgets/_CategoryDropDown.cshtml",model);
         }
-        [HttpGet]
+        
         [ChildActionOnly]
         public ActionResult SearchingWidget(string searchterm, int? pageNo)
         {

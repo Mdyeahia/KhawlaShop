@@ -127,7 +127,24 @@
                         </ul>
                         <div class="header__cart__price">item: <span>$150.00</span></div>
                         <div class="header__top__right__auth">
-                            <a href="@Url.Action("Login","Account")"><i class="fa fa-user"></i> Login</a>
+                 
+                            @if (User.Identity.IsAuthenticated)
+                            {
+
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="submit" value="Logout" class="btn btn-default" />
+                                    }
+                                }
+                            else
+                            {
+
+
+                                <a href="@Url.Action("Login","Account")"><i class="fa fa-user"></i> Login</a>
+
+
+                            }
                         </div>
                     </div>
                 </div>

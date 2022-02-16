@@ -16,7 +16,7 @@ namespace Khawla.Web.Controllers
         {
             return View();
         }
-        public PartialViewResult ProductList(int? categoryId, string search, int? pageNo)
+        public PartialViewResult ProductList(int? categoryId, string search, int? pageNo )
         {
             var pageSize = 3;
             pageNo = pageNo ?? 1;

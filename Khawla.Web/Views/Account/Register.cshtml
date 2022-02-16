@@ -4,6 +4,9 @@
 }
 <link href="~/Content/css/LogRegistration.css" rel="stylesheet" />
 <div class="login">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
     <div class="logcontainer">
         <div class="row" id="loginrow">
             <div class="col-md-12">
@@ -14,7 +17,7 @@
                     <div class="col-md-6">
                         <span class="registerlogo">
                             Already a member?
-                            <a href="@Url.Action("Login","Account")">Login</a> here
+                            <a href="@Url.Action("Login", "Account")">Login</a> here
                         </span>
                     </div>
 
@@ -61,18 +64,20 @@
             </div>
         </div>
     </div>
-</div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
     }
-    <script>
-        $(document).ready(function () {
-            // Handler for .ready() called.
-            $('.menu').hide();
-            $('.sub-menu').hide();
-            $('html, body').animate({
-                scrollTop: $('.logcontainer').offset().top
-            }, 'slow');
+</div>
 
-        });
-    </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        // Handler for .ready() called.
+        $('.menu').hide();
+        $('.sub-menu').hide();
+        $('html, body').animate({
+            scrollTop: $('.logcontainer').offset().top
+        }, 'slow');
+
+    });
+</script>

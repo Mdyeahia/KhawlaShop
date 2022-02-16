@@ -55,7 +55,7 @@ namespace Khawla.Web.Controllers
 
             return PartialView(model);
         }
-
+        [Authorize]
         public ActionResult ShopingCart()
         {
             CheckoutViewModel model = new CheckoutViewModel();
