@@ -113,7 +113,7 @@
                             <li>Subtotal <span>@Model.CartProducts.Sum(x => x.Price * Model.CartProductIDs.Count(productID => productID == x.ID))</span></li>
                             <li>Total <span>@Model.CartProducts.Sum(x => x.Price * Model.CartProductIDs.Count(productID => productID == x.ID))</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a href="@Url.Action("CheckOut","Shop")" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>

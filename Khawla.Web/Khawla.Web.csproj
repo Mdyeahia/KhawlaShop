@@ -362,6 +362,7 @@
     <Content Include="Views\SubCategories\Index.cshtml" />
     <Content Include="Views\SubCategories\Create.cshtml" />
     <Content Include="Views\Shop\ShopingCart.cshtml" />
+    <Content Include="Views\Shop\CheckOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

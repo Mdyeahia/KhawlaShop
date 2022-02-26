@@ -10,5 +10,7 @@ namespace Khawla.Web.ViewModels
     {
         public List<Product> CartProducts { get; set; }
         public List<int> CartProductIDs { get; set; }
+
+        public KhawlaUser User { get; set; }
     }
 }

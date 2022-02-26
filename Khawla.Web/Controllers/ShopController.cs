@@ -1,5 +1,7 @@
 ﻿using Khawla.Service;
 using Khawla.Web.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,23 @@ namespace Khawla.Web.Controllers
 {
     public class ShopController : Controller
     {
+
+        private KhawlaSignInManager _signInManager;
+        private KhawlaUserManager _userManager;
+
+        public KhawlaSignInManager SignInManager
+        {
+            get { return _signInManager ?? HttpContext.GetOwinContext().Get<KhawlaSignInManager>(); }
+            private set { _signInManager = value; }
+
+        }
+        public KhawlaUserManager UserManager
+        {
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<KhawlaUserManager>(); }
+            private set { _userManager = value; }
+        }
+
+
         // GET: Shop
         public ActionResult Index(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryID, int? subcategoryID, int? sortBy, int? pageNo)
         {
@@ -55,7 +74,7 @@ namespace Khawla.Web.Controllers
 
             return PartialView(model);
         }
-        [Authorize]
+       
         public ActionResult ShopingCart()
         {
             CheckoutViewModel model = new CheckoutViewModel();
@@ -67,6 +86,23 @@ namespace Khawla.Web.Controllers
                     .Split('-').Select(x => int.Parse(x)).ToList();
                 model.CartProducts = ProductsService.Instance.GetProducts(model.CartProductIDs);
 
+               
+            }
+            return View(model);
+        }
+        [Authorize]
+        public ActionResult CheckOut()
+        {
+            CheckoutViewModel model = new CheckoutViewModel();
+
+            var CardProductsCookie = Request.Cookies["CartProducts"];
+            if (CardProductsCookie != null && !string.IsNullOrEmpty(CardProductsCookie.Value))
+            {
+                model.CartProductIDs = CardProductsCookie.Value
+                    .Split('-').Select(x => int.Parse(x)).ToList();
+                model.CartProducts = ProductsService.Instance.GetProducts(model.CartProductIDs);
+
+                model.User = UserManager.FindById(User.Identity.GetUserId());
             }
             return View(model);
         }
