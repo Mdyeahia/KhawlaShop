@@ -29,7 +29,7 @@ namespace Khawla.Service
 
         #endregion
 
-        
+
         public Product GetProductById(int Id)
         {
             var context = new KhawlaDbContext();
@@ -39,7 +39,7 @@ namespace Khawla.Service
         }
         public List<Product> GetProducts(List<int> Ids)
         {
-            using(var context=new KhawlaDbContext())
+            using (var context = new KhawlaDbContext())
             {
                 return context.Products.Where(x => Ids.Contains(x.ID)).Include(a => a.ProductPictures).Include("ProductPictures.Picture").ToList();
             }
@@ -55,18 +55,18 @@ namespace Khawla.Service
         public List<Product> GetProducts(int pageNo, int pageSize)
         {
             var context = new KhawlaDbContext();
-            
-                return context.Products.OrderByDescending(p => p.ID)
-                    .Skip((pageNo - 1) * pageSize)
-                    .Take(pageSize)
-                    .Include(p => p.Category).ToList();
-            
+
+            return context.Products.OrderByDescending(p => p.ID)
+                .Skip((pageNo - 1) * pageSize)
+                .Take(pageSize)
+                .Include(p => p.Category).ToList();
+
         }
         public List<Product> FilterProduct(int? categoryId, string searchTerm, int pageNo, int pageSize)
         {
             var context = new KhawlaDbContext();
 
-            var product = context.Products.Include(a =>a.Category).Include(a => a.SubCategory).Include("ProductPictures.Picture").AsQueryable();
+            var product = context.Products.Include(a => a.Category).Include(a => a.SubCategory).Include("ProductPictures.Picture").AsQueryable();
             if (categoryId.HasValue && categoryId.Value > 0)
             {
                 product = product.Where(x => x.CategoryId == categoryId.Value);
@@ -85,7 +85,7 @@ namespace Khawla.Service
             var context = new KhawlaDbContext();
 
             var product = context.Products.Include(a => a.Category).Include(a => a.SubCategory).Include("ProductPictures.Picture").AsQueryable();
-            
+
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 product = product.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));
@@ -95,7 +95,7 @@ namespace Khawla.Service
             return product.OrderByDescending(a => a.ID).Skip(skipCount).Take(pageSize).ToList();
 
         }
-        public List<Product> SearchProducts(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryId,int? subcategoryID, int? sortBy, int pageNo, int pageSize)
+        public List<Product> SearchProducts(string searchTerm, int? maximumPrice, int? minimumPrice, int? categoryId, int? subcategoryID, int? sortBy, int pageNo, int pageSize)
         {
             using (var context = new KhawlaDbContext())
             {
@@ -205,7 +205,7 @@ namespace Khawla.Service
             {
                 product = product.Where(x => x.CategoryId == categoryId.Value);
             }
-           
+
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 product = product.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));
@@ -220,7 +220,7 @@ namespace Khawla.Service
             var context = new KhawlaDbContext();
 
             var product = context.Products.Include(a => a.Category).AsQueryable();
-           
+
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 product = product.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));
@@ -235,11 +235,11 @@ namespace Khawla.Service
             var context = new KhawlaDbContext();
 
             return context.Products.Include(c => c.Category)
-                .Include(c=>c.ProductPictures)
+                .Include(c => c.ProductPictures)
                 .Include("ProductPictures.Picture")
                 .Where(c => c.Category.IsFeatured == true).Take(8).ToList();
         }
-       
+
         public List<Product> GetWidgetProductsbyCategory(int categoryID, int pageSize)
         {
             var context = new KhawlaDbContext();
@@ -249,7 +249,7 @@ namespace Khawla.Service
                     .Take(pageSize)
                     .Include(p => p.Category)
                     .ToList();
-            
+
         }
         public List<Product> GetLatestProduct(int numberofProducts)
         {
@@ -264,9 +264,9 @@ namespace Khawla.Service
         public int GetMaximumPrice()
         {
             KhawlaDbContext context = new KhawlaDbContext();
-            
-           return (int)(context.Products.Max(p => p.Price));
-            
+
+            return (int)(context.Products.Max(p => p.Price));
+
         }
         public int GetMinimumPrice()
         {
@@ -298,13 +298,30 @@ namespace Khawla.Service
         public void Deleteproduct(int Id)
         {
             var context = new KhawlaDbContext();
-            var deleteproduct = context.Products.Where(p=>p.ID==Id).Include(p=>p.ProductPictures).FirstOrDefault();
+            var deleteproduct = context.Products.Where(p => p.ID == Id).Include(p => p.ProductPictures).FirstOrDefault();
 
             context.ProductPictures.RemoveRange(deleteproduct.ProductPictures);
             context.Products.Remove(deleteproduct);
-            
+
             context.SaveChanges();
 
         }
+        public List<string> AutoComSearchTerm(string value)
+        {
+           
+            var context = new KhawlaDbContext();
+            //var products = context.Products.Include(p => p.Category)
+            //        .Include(a => a.SubCategory)
+            //    .Include(p => p.ProductPictures)
+            //    .Include("ProductPictures.Picture").ToList();
+            var pp=context.Products.Include(p => p.Category)
+                  .Include(a => a.SubCategory)
+              .Include(p => p.ProductPictures)
+              .Include("ProductPictures.Picture").Where(c=>c.Name.ToLower().Contains(value.ToLower())).Select(c=>c.Name).ToList();
+
+            return pp;
+        }
+
+
     }
 }

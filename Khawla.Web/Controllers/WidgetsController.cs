@@ -1,4 +1,5 @@
-﻿using Khawla.Service;
+﻿using Khawla.Entities;
+using Khawla.Service;
 using Khawla.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace Khawla.Web.Controllers
     public class WidgetsController : Controller
     {
         // GET: Widgets
-        public ActionResult Products(bool isFeatured,bool isLatestProduct, bool topRated, bool topReview,int? CategoryID = 0)
+        public ActionResult Products(bool isFeatured, bool isLatestProduct, bool topRated, bool topReview, int? CategoryID = 0)
         {
-            
+
             ProductsWidgetViewModel model = new ProductsWidgetViewModel();
             model.Isfeatured = isFeatured;
             model.IsLatestProduct = isLatestProduct;
@@ -47,15 +48,15 @@ namespace Khawla.Web.Controllers
 
             return PartialView(model);
         }
-       
+
         [ChildActionOnly]
         public ActionResult CategoryDropDownWidget()
         {
             HomeViewModel model = new HomeViewModel();
             model.AllCategory = CategoriesService.Instance.allCategory();
-            return PartialView("~/Views/Widgets/_CategoryDropDown.cshtml",model);
+            return PartialView("~/Views/Widgets/_CategoryDropDown.cshtml", model);
         }
-        
+
         [ChildActionOnly]
         public ActionResult SearchingWidget(string searchterm, int? pageNo)
         {
@@ -63,12 +64,18 @@ namespace Khawla.Web.Controllers
             pageNo = pageNo ?? 1;
             HomeViewModel model = new HomeViewModel();
             model.SearchTerm = searchterm;
-            model.AllProduct = ProductsService.Instance.FilterProduct(searchterm,pageNo.Value, pageSize);
+            model.AllProduct = ProductsService.Instance.FilterProduct(searchterm, pageNo.Value, pageSize);
             var totalProducts = ProductsService.Instance.GetProductCount(searchterm);
 
             model.Pager = new Pager(totalProducts, pageNo, pageSize);
 
             return PartialView("~/Views/Widgets/_SearchingWidget.cshtml", model);
+        }
+        [HttpPost]
+        public JsonResult catchproduct(string value)
+        {  
+            var products=ProductsService.Instance.AutoComSearchTerm(value);
+            return Json(products, JsonRequestBehavior.AllowGet);
         }
        
     }
